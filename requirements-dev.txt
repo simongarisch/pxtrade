@@ -1,7 +1,7 @@
 -r requirements.txt
-pytest
-pytest-cov
-tox
-pylint
-flake8
-black
+pytest==6.0.1
+pytest-cov==2.10.1
+tox==3.20.0
+pylint==2.6.0
+flake8==3.8.3
+black==20.9b1
