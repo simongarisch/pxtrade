@@ -57,6 +57,12 @@ class Asset(ABC):
     def local_value(self):
         raise NotImplementedError()  # pragma: no cover
 
+    def __str__(self):
+        class_name = self.__class__.__name__
+        return class_name + "('{}', {}, currency_code='{}')".format(
+            self.code, self.price, self.currency_code,
+        )
+
 
 class StaticPriceAsset(Asset):
     """ Some assets will have a static price (e.g. cash). """
