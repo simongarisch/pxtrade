@@ -1,5 +1,13 @@
 import pytest
-from pytrade.assets.fx_rates import FxRate
+from pytrade.assets.fx_rates import FxRate, validate_pair
+
+
+def test_validate_pair():
+    assert "AUDUSD" == validate_pair("AUDUSD")
+    with pytest.raises(TypeError):
+        validate_pair(123)
+    with pytest.raises(ValueError):
+        validate_pair("XXXYY")
 
 
 def test_fx_rate_init():
@@ -77,6 +85,8 @@ def test_get_rate():
     audusd.rate = 0.8
     assert FxRate.get("AUDUSD") == 0.8
     assert FxRate.get("USDAUD") == 1.25
+    with pytest.raises(TypeError):
+        audusd.rate = "123"
 
 
 def test_get_instance():
@@ -95,6 +105,8 @@ def test_get_observable_instance():
 
     instance = FxRate.get_observable_instance("USDAUD")
     assert instance is audusd
+    with pytest.raises(ValueError):
+        FxRate.get_observable_instance("XXXYYY")  # not available
 
 
 def test_inverse_pair_creation():

@@ -1,5 +1,6 @@
 import pytest
 from pytrade.assets import FxRate, Stock, Cash, Portfolio
+from pytrade.settings import get_default_currency_code
 
 
 def test_portfolio_init():
@@ -137,3 +138,51 @@ def test_portfolio_trade():
         - 120 * 1 / 0.7  # usd cash
     )
     assert round(portfolio.value, 1) == round(expected_value, 1)
+
+
+def test_default_currency_code():
+    portfolio = Portfolio()
+    default_code = get_default_currency_code()
+    assert portfolio.base_currency_code == default_code
+
+
+def test_trade_types():
+    portfolio = Portfolio("AUD")
+    stock = Stock("ZZX AU", 2.50, currency_code="AUD")
+    with pytest.raises(TypeError):
+        portfolio.trade(None, units=1)
+    with pytest.raises(TypeError):
+        portfolio.trade(stock, units="1")
+
+    stock.price = None
+    with pytest.raises(ValueError):
+        # cannot calculate consideration with a None value
+        portfolio.trade(stock, units=1)
+
+    # consideration must be numeric
+    with pytest.raises(TypeError):
+        portfolio.trade(stock, units=1, consideration="123")
+
+    # codes such as 'AUD', 'USD', 'GBP'
+    # are reserved for cash and shouldn't be used for other assets.
+    stock = Stock("AUD", 2.50, currency_code="AUD")
+    with pytest.raises(TypeError):
+        portfolio.trade(stock, units=1)
+
+
+def test_portfolio_str():
+    portfolio = Portfolio("AUD")
+    audusd = FxRate("AUDUSD", 0.7)  # noqa: F841
+    goog = Stock("GOOG US", 1530, currency_code="USD")
+    googl = Stock("GOOGL US", 1520, currency_code="USD")
+    portfolio.transfer(goog, 100)
+    portfolio.transfer(googl, 200)
+    portfolio_str = str(portfolio)
+    part0 = "Portfolio(AUD):"
+    part1 = "Stock('GOOG US', 1530, currency_code='USD'): 100"
+    part2 = "Stock('GOOGL US', 1520, currency_code='USD'): 200"
+
+    parts = portfolio_str.split("\n")
+    assert parts[0].strip() == part0
+    assert parts[1].strip() == part1
+    assert parts[2].strip() == part2
