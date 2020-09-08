@@ -8,7 +8,7 @@ from collections import defaultdict
 from numbers import Real
 from .asset import Asset, VariablePriceAsset
 from .cash import Cash
-from .codes import check_currency_code
+from .codes import check_code, check_currency_code
 from .fx_rates import FxRate, is_equivalent_pair
 from ..observable import Observer
 from ..settings import get_default_currency_code
@@ -87,6 +87,13 @@ class Portfolio(Observer):
             fx_rate = FxRate.get(fx_pair)
             value += asset.local_value / fx_rate * units
         self._value = value
+
+    def get_holding_units(self, asset_code):
+        asset_code = check_code(asset_code)
+        for asset, units in self._holdings.items():
+            if asset.code == asset_code:
+                return units
+        return 0
 
     def __str__(self):
         return "Portfolio(%s): \n" % self.base_currency_code + "\n".join(

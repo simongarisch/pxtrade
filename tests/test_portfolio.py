@@ -102,3 +102,38 @@ def test_stock_observed():
     assert round(portfolio.value, 1) == round(
         1000 * 2 + 1000 * 130 / audusd.rate, 1
     )
+
+
+def test_portfolio_trade():
+    portfolio = Portfolio("AUD")
+    aud = Cash("AUD")
+    portfolio.transfer(aud, 1000)
+    assert portfolio.value == 1000
+
+    assert portfolio.get_holding_units("ZZB AU") == 0
+    zzb = Stock("ZZB AU", 2.50, currency_code="AUD")
+    portfolio.trade(zzb, 100)
+    assert portfolio.get_holding_units("ZZB AU") == 100
+    assert portfolio.get_holding_units("AUD") == 750
+    assert portfolio.value == 1000
+
+    aapl = Stock("AAPL US", 120, currency_code="USD")
+    audusd = FxRate("AUDUSD", 0.65)
+    portfolio.trade(aapl, 1)
+    assert portfolio.get_holding_units("ZZB AU") == 100
+    assert portfolio.get_holding_units("AUD") == 750
+    assert portfolio.get_holding_units("AAPL US") == 1
+    assert portfolio.get_holding_units("USD") == -120
+
+    assert portfolio.value == 1000  # no prices have moved yet
+    zzb.price = 2.40
+    aapl.price = 130
+    audusd.rate = 0.7
+
+    expected_value = (
+        +2.40 * 100  # zzb stock
+        + 750 * 1  # aud cash
+        + 130 * 1 / 0.7  # aapl stock
+        - 120 * 1 / 0.7  # usd cash
+    )
+    assert round(portfolio.value, 1) == round(expected_value, 1)
