@@ -36,8 +36,7 @@ class Portfolio(Observer):
         return self._base_currency_code
 
     def transfer(self, asset, units):
-        self._holdings[asset] += units
-        self._revalue()
+        self.trade(asset, units, consideration=0)
 
     def trade(self, asset, units, consideration=None):
         if not isinstance(asset, Asset):
@@ -63,9 +62,27 @@ class Portfolio(Observer):
                 )
         else:
             cash = Cash(currency_code)
+
         self._holdings[asset] += units
         self._holdings[cash] += consideration
+        self._check_observable(asset)
         self._revalue()
+
+    def _check_observable(self, asset):
+        """ Check whether we need to observe some asset.
+            If we have some non-zero holding then we should
+            observe the asset and its quoted currency.
+        """
+        units = self._holdings[asset]
+        fx_pair = self._base_currency_code + asset.currency_code
+        if not is_equivalent_pair(fx_pair):  # e.g. don't observe 'AUDAUD'
+            fx_observable = FxRate.get_observable_instance(fx_pair)
+            fx_observable.add_observer(self)
+        if units != 0:
+            if isinstance(asset, VariablePriceAsset):
+                asset.add_observer(self)
+        else:
+            asset.remove_observer(self)
 
     def observable_update(self, observable):
         self._revalue()
@@ -74,16 +91,8 @@ class Portfolio(Observer):
         value = 0
         base_currency_code = self._base_currency_code
         for asset, units in self._holdings.items():
-            # make sure to observe all assets held and the currencies they
-            # are quoted in.
-            fx_pair = base_currency_code + asset.currency_code
-            if not is_equivalent_pair(fx_pair):
-                fx_observable = FxRate.get_observable_instance(fx_pair)
-                fx_observable.add_observer(self)
-            if isinstance(asset, VariablePriceAsset):
-                asset.add_observer(self)
-
             # calculate the value of this holding to the portfolio
+            fx_pair = base_currency_code + asset.currency_code
             fx_rate = FxRate.get(fx_pair)
             value += asset.local_value / fx_rate * units
         self._value = value
@@ -100,5 +109,6 @@ class Portfolio(Observer):
             [
                 str(asset) + ": " + format(int(units), ",d")
                 for asset, units in self._holdings.items()
+                if units != 0
             ]
         )

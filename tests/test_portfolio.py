@@ -173,6 +173,7 @@ def test_trade_types():
 def test_portfolio_str():
     portfolio = Portfolio("AUD")
     audusd = FxRate("AUDUSD", 0.7)  # noqa: F841
+    assert audusd.rate == 0.7
     goog = Stock("GOOG US", 1530, currency_code="USD")
     googl = Stock("GOOGL US", 1520, currency_code="USD")
     portfolio.transfer(goog, 100)
