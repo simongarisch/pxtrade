@@ -27,8 +27,10 @@ def test_check_positive_numeric():
 
 def test_to_datetime():
     dt = datetime(2020, 9, 10, 12, 30)
+    npdt = np.datetime64(dt)
+    pddt = pd.Timestamp(dt)
     assert to_datetime(dt) is dt
-    assert to_datetime(np.datetime64(dt)) == dt
-    assert to_datetime(pd.Timestamp(dt)) == dt
+    assert to_datetime(npdt) == dt
+    assert to_datetime(pddt) == dt
     with pytest.raises(TypeError):
         to_datetime("xxx")

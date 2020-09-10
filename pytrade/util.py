@@ -28,10 +28,10 @@ def to_datetime(t):
         to a python datetime object. Often times are represented as
         np.datetime64 or pd.Timestamp objects.
     """
-    if isinstance(t, datetime):
-        return t
-    if isinstance(t, np.datetime64):
-        return pd.Timestamp(t).to_pydatetime()
     if isinstance(t, pd.Timestamp):
         return t.to_pydatetime()
+    if isinstance(t, np.datetime64):
+        return pd.Timestamp(t).to_pydatetime()
+    if isinstance(t, datetime):
+        return t
     raise TypeError("Unrecognised time object: " + str(t))
