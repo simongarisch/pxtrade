@@ -14,6 +14,7 @@ def test_asset_price_event():
     xyz = Stock("XYZ AU", 2.50, currency_code="AUD")
     dt = datetime(2020, 9, 1, 12, 30)
     event = AssetPriceEvent(xyz, dt, 2.60)
+    assert str(event) == "AssetPriceEvent(Stock('XYZ AU'), 2020-09-01 12:30:00, 2.6)"  # noqa: E501
     assert event.asset is xyz
     assert event.datetime is dt
     assert event.event_value == 2.60
@@ -39,6 +40,7 @@ def test_fx_rate_event():
     fx_rate = FxRate("AUDNZD")
     dt = datetime(2020, 9, 1, 12, 30)
     event = FxRateEvent(fx_rate, dt, 1.10)
+    assert str(event) == "FxRateEvent('AUDNZD', 2020-09-01 12:30:00, 1.1)"
     assert event.fx_rate is fx_rate
     assert event.fx_rate.pair == "AUDNZD"
     assert event.datetime is dt
@@ -66,6 +68,8 @@ def test_proposed_trade_event():
     dt = datetime(2020, 9, 1, 12, 30)
     proposed_trade = ProposedTrade(goog, +100)
     event = ProposedTradeEvent(dt, proposed_trade)
+    print(str(event))
+    assert str(event) == "ProposedTradeEvent(2020-09-01 12:30:00, ProposedTrade('GOOG US', 100))"  # noqa: E501
     assert event.datetime is dt
     assert event.event_value is proposed_trade
 
@@ -84,8 +88,10 @@ def test_proposed_trade_event():
 
 def test_indicator_event():
     dt = datetime(2020, 9, 1, 12, 30)
-    event = IndicatorEvent(dt, "some_value")
+    event = IndicatorEvent("some_name", dt, "some_value")
+    assert str(event) == "IndicatorEvent('some_name', 2020-09-01 12:30:00, some_value)"  # noqa: E501
     assert event.datetime is dt
+    assert event.indicator_name == "some_name"
     assert event.event_value == "some_value"
 
     # is immutable
@@ -103,19 +109,26 @@ def test_indicator_event_validation():
             raise TypeError("Expecting string.")
 
     event = IndicatorEvent(
-        dt, "xxx", validation_func=validation_func
+        "IndicatorName",
+        dt,
+        "IndicatorValue",
+        validation_func=validation_func
     )
     assert event.datetime is dt
-    assert event.event_value == "xxx"
+    assert event.event_value == "IndicatorValue"
 
     # event value must pass valiadation_func validation
     with pytest.raises(TypeError):
         IndicatorEvent(
-            dt, 123, validation_func=validation_func
+            "IndicatorName", dt, 123, validation_func=validation_func
         )
 
     # validation func must be callable
     with pytest.raises(TypeError):
         IndicatorEvent(
-            dt, "xxx", validation_func=123
+            "IndicatorName", dt, "xxx", validation_func=123
         )
+
+    # indicator name must be a string
+    with pytest.raises(TypeError):
+        IndicatorEvent(123, dt, "xxx")

@@ -49,3 +49,10 @@ def test_units_must_be_int():
     assert proposed_trade.units == 100
     with pytest.raises(TypeError):
         proposed_trade = trade.ProposedTrade("ZZB AU", "100")
+
+
+def test_trade_str():
+    zzb = Stock("ZZB AU", 2.50, currency_code="AUD")
+    proposed_trade = trade.ProposedTrade(zzb, 100)
+    tradestr = str(proposed_trade)
+    assert tradestr == "ProposedTrade('ZZB AU', 100)"

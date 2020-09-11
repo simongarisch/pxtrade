@@ -22,6 +22,10 @@ class AbstractEvent(ABC):
     def _validate(self, event_value):
         raise NotImplementedError()  # pragma: no cover
 
+    @abstractmethod
+    def __str__(self):
+        raise NotImplementedError()  # pragma: no cover
+
 
 class AssetPriceEvent(AbstractEvent):
     def __init__(self, asset, datetime, event_value):
@@ -34,6 +38,19 @@ class AssetPriceEvent(AbstractEvent):
 
     def _validate(self, event_value):
         check_positive_numeric(event_value)
+
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "("
+            + self._asset.__class__.__name__
+            + "('" + self._asset.code + "')"
+            + ", "
+            + str(self._datetime)
+            + ", "
+            + str(self._event_value)
+            + ")"
+        )
 
 
 class FxRateEvent(AbstractEvent):
@@ -50,22 +67,70 @@ class FxRateEvent(AbstractEvent):
     def _validate(self, event_value):
         check_positive_numeric(event_value)
 
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "('"
+            + str(self._fx_rate)
+            + "', "
+            + str(self._datetime)
+            + ", "
+            + str(self._event_value)
+            + ")"
+        )
+
 
 class ProposedTradeEvent(AbstractEvent):
     def _validate(self, event_value):
         if not isinstance(event_value, ProposedTrade):
             raise TypeError("Expecting ProposedTrade instance.")
 
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "("
+            + str(self._datetime)
+            + ", "
+            + str(self._event_value)
+            + ")"
+        )
+
 
 class IndicatorEvent(AbstractEvent):
-    def __init__(self, datetime, event_value, *, validation_func=None):
+    def __init__(
+        self,
+        indicator_name,
+        datetime,
+        event_value,
+        *,
+        validation_func=None,
+    ):
+        if not isinstance(indicator_name, str):
+            raise TypeError("Expecting string.")
         if validation_func is not None:
             if not callable(validation_func):
                 raise TypeError("Expecting a callable object.")
 
+        self._indicator_name = indicator_name
         self._validation_func = validation_func
         super().__init__(datetime, event_value)
+
+    @property
+    def indicator_name(self):
+        return self._indicator_name
 
     def _validate(self, event_value):
         if self._validation_func is not None:
             self._validation_func(event_value)
+
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "('"
+            + str(self._indicator_name)
+            + "', "
+            + str(self._datetime)
+            + ", "
+            + str(self._event_value)
+            + ")"
+        )

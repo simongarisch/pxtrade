@@ -133,3 +133,6 @@ class FxRate(Observable):
             return instance
 
         raise ValueError("%s instance doesn't exist" % pair)
+
+    def __str__(self):
+        return self._pair
