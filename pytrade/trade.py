@@ -28,3 +28,13 @@ class ProposedTrade:
     @property
     def units(self):
         return self._units
+
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "('"
+            + self._asset_code
+            + "', "
+            + str(self._units)
+            + ")"
+        )
