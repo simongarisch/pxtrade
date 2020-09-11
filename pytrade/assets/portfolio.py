@@ -20,8 +20,7 @@ class Portfolio(Observer):
         super().__init__()
         if base_currency_code is None:
             base_currency_code = get_default_currency_code()
-        base_currency_code = check_currency_code(base_currency_code)
-        self._base_currency_code = base_currency_code
+        self._base_currency_code = check_currency_code(base_currency_code)
         self._holdings = defaultdict(lambda: 0)
         self._value = 0
 
