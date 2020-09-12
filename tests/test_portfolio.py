@@ -172,16 +172,18 @@ def test_trade_types():
 
 def test_portfolio_str():
     portfolio = Portfolio("AUD")
+    assert str(portfolio) == "Portfolio('AUD')"
+
     audusd = FxRate("AUDUSD", 0.7)  # noqa: F841
     assert audusd.rate == 0.7
-    goog = Stock("GOOG US", 1530, currency_code="USD")
-    googl = Stock("GOOGL US", 1520, currency_code="USD")
-    portfolio.transfer(goog, 100)
-    portfolio.transfer(googl, 200)
+    stock1 = Stock("CCC US", 1530, currency_code="USD")
+    stock2 = Stock("DDD US", 1520, currency_code="USD")
+    portfolio.transfer(stock1, 100)
+    portfolio.transfer(stock2, 200)
     portfolio_str = str(portfolio)
-    part0 = "Portfolio(AUD):"
-    part1 = "Stock('GOOG US', 1530, currency_code='USD'): 100"
-    part2 = "Stock('GOOGL US', 1520, currency_code='USD'): 200"
+    part0 = "Portfolio('AUD'):"
+    part1 = "Stock('CCC US', 1530, currency_code='USD'): 100"
+    part2 = "Stock('DDD US', 1520, currency_code='USD'): 200"
 
     parts = portfolio_str.split("\n")
     assert parts[0].strip() == part0
