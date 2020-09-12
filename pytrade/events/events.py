@@ -1,3 +1,8 @@
+"""
+Events such as changes in asset prices, fx rates and indicators will occur.
+All events must define methods _validate, _process, __str__.
+Events can only be processed once.
+"""
 from abc import ABC, abstractmethod
 from ..util import check_positive_numeric, to_datetime
 from ..assets.fx_rates import FxRate
@@ -9,6 +14,13 @@ class AbstractEvent(ABC):
         self._datetime = to_datetime(datetime)
         self._validate(event_value)
         self._event_value = event_value
+        self._processed = False
+
+    def process(self):
+        if self._processed is True:
+            raise ValueError("Event has already been processed.")
+        self._process()
+        self._processed = True
 
     @property
     def datetime(self):
@@ -21,6 +33,10 @@ class AbstractEvent(ABC):
     @abstractmethod
     def _validate(self, event_value):
         raise NotImplementedError()  # pragma: no cover
+
+    @abstractmethod
+    def _process(self):
+        pass
 
     @abstractmethod
     def __str__(self):
@@ -38,6 +54,9 @@ class AssetPriceEvent(AbstractEvent):
 
     def _validate(self, event_value):
         check_positive_numeric(event_value)
+
+    def _process(self):
+        self._asset.price = self._event_value
 
     def __str__(self):
         return (
@@ -67,6 +86,9 @@ class FxRateEvent(AbstractEvent):
     def _validate(self, event_value):
         check_positive_numeric(event_value)
 
+    def _process(self):
+        self._fx_rate.rate = self._event_value
+
     def __str__(self):
         return (
             self.__class__.__name__
@@ -84,6 +106,9 @@ class ProposedTradeEvent(AbstractEvent):
     def _validate(self, event_value):
         if not isinstance(event_value, ProposedTrade):
             raise TypeError("Expecting ProposedTrade instance.")
+
+    def _process(self):
+        pass  # TODO
 
     def __str__(self):
         return (
@@ -122,6 +147,9 @@ class IndicatorEvent(AbstractEvent):
     def _validate(self, event_value):
         if self._validation_func is not None:
             self._validation_func(event_value)
+
+    def _process(self):
+        pass # TODO
 
     def __str__(self):
         return (

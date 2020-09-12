@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime
-from pytrade.assets import Stock, FxRate
+from pytrade.assets import Stock, Portfolio, FxRate
 from pytrade.trade import ProposedTrade
 from pytrade.events.events import (
     AssetPriceEvent,
@@ -64,22 +64,24 @@ def test_fx_rate_event():
 
 
 def test_proposed_trade_event():
+    portfolio = Portfolio("USD")
     goog = Stock("GOOG US", 1500, currency_code="USD")
     dt = datetime(2020, 9, 1, 12, 30)
-    proposed_trade = ProposedTrade(goog, +100)
+    proposed_trade = ProposedTrade(portfolio, goog, +100)
     event = ProposedTradeEvent(dt, proposed_trade)
-    print(str(event))
-    assert str(event) == "ProposedTradeEvent(2020-09-01 12:30:00, ProposedTrade('GOOG US', 100))"  # noqa: E501
+    assert str(event) == "ProposedTradeEvent(2020-09-01 12:30:00, ProposedTrade(Portfolio('USD'), 'GOOG US', 100))"  # noqa: E501
     assert event.datetime is dt
     assert event.event_value is proposed_trade
 
     # args must be of specific types / values
     with pytest.raises(TypeError):
-        ProposedTradeEvent("2020-09-01", proposed_trade)
+        ProposedTradeEvent(portfolio, "2020-09-01", proposed_trade)
     with pytest.raises(TypeError):
-        ProposedTradeEvent(dt, 100)
+        ProposedTradeEvent(portfolio, dt, 100)
 
     # is immutable
+    with pytest.raises(AttributeError):
+        event.event_value.portfolio = portfolio
     with pytest.raises(AttributeError):
         event.datetime = datetime
     with pytest.raises(AttributeError):
