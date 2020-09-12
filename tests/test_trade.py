@@ -30,7 +30,9 @@ class TestTrade(object):
         assert proposed_trade.asset_code == "ZZB AU"
         assert proposed_trade.units == 300
         with pytest.raises(TypeError):
-            ProposedTrade(123, 100)
+            ProposedTrade("Portfolio", self.stock, 100)
+        with pytest.raises(TypeError):
+            ProposedTrade(self.portfolio, 123, 100)
 
     def test_proposed_trade_immutable(self):
         proposed_trade = self.proposed_trade

@@ -11,33 +11,40 @@ from pytrade.events.events import (
 
 
 def test_asset_price_event():
-    xyz = Stock("XYZ AU", 2.50, currency_code="AUD")
+    stock = Stock("XYZ AU", 2.50, currency_code="AUD")
     dt = datetime(2020, 9, 1, 12, 30)
-    event = AssetPriceEvent(xyz, dt, 2.60)
+    event = AssetPriceEvent(stock, dt, 2.60)
     assert str(event) == "AssetPriceEvent(Stock('XYZ AU'), 2020-09-01 12:30:00, 2.6)"  # noqa: E501
-    assert event.asset is xyz
+    assert event.asset is stock
     assert event.datetime is dt
     assert event.event_value == 2.60
 
     # args must be of specific types / values
     with pytest.raises(TypeError):
-        AssetPriceEvent(xyz, "2020-09-01", 2.60)
+        AssetPriceEvent(stock, "2020-09-01", 2.60)
     with pytest.raises(TypeError):
-        AssetPriceEvent(xyz, dt, "2.60")
+        AssetPriceEvent(stock, dt, "2.60")
     with pytest.raises(ValueError):
-        AssetPriceEvent(xyz, dt, -2.0)  # must be positive
+        AssetPriceEvent(stock, dt, -2.0)  # must be positive
 
     # is immutable
     with pytest.raises(AttributeError):
-        event.asset = xyz
+        event.asset = stock
     with pytest.raises(AttributeError):
         event.datetime = dt
     with pytest.raises(AttributeError):
         event.event_value = 2.65
 
+    # can be processed
+    event.process()
+    assert stock.price == 2.60
+    with pytest.raises(ValueError):
+        event.process()  # cannot process twice
+
 
 def test_fx_rate_event():
     fx_rate = FxRate("AUDNZD")
+    assert fx_rate.rate is None
     dt = datetime(2020, 9, 1, 12, 30)
     event = FxRateEvent(fx_rate, dt, 1.10)
     assert str(event) == "FxRateEvent('AUDNZD', 2020-09-01 12:30:00, 1.1)"
@@ -62,6 +69,12 @@ def test_fx_rate_event():
     with pytest.raises(AttributeError):
         event.event_value = 1.09
 
+    # can be processed
+    event.process()
+    assert fx_rate.rate == 1.10
+    with pytest.raises(ValueError):
+        event.process()  # cannot process twice
+
 
 def test_proposed_trade_event():
     portfolio = Portfolio("USD")
@@ -75,9 +88,9 @@ def test_proposed_trade_event():
 
     # args must be of specific types / values
     with pytest.raises(TypeError):
-        ProposedTradeEvent(portfolio, "2020-09-01", proposed_trade)
+        ProposedTradeEvent("2020-09-01", proposed_trade)
     with pytest.raises(TypeError):
-        ProposedTradeEvent(portfolio, dt, 100)
+        ProposedTradeEvent(dt, 100)
 
     # is immutable
     with pytest.raises(AttributeError):
