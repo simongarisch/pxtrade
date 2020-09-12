@@ -36,7 +36,7 @@ class AbstractEvent(ABC):
 
     @abstractmethod
     def _process(self):
-        pass
+        raise NotImplementedError()  # pragma: no cover
 
     @abstractmethod
     def __str__(self):
@@ -149,7 +149,7 @@ class IndicatorEvent(AbstractEvent):
             self._validation_func(event_value)
 
     def _process(self):
-        pass # TODO
+        pass  # TODO
 
     def __str__(self):
         return (
