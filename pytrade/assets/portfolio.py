@@ -104,10 +104,16 @@ class Portfolio(Observer):
         return 0
 
     def __str__(self):
-        return "Portfolio(%s): \n" % self.base_currency_code + "\n".join(
-            [
-                str(asset) + ": " + format(int(units), ",d")
-                for asset, units in self._holdings.items()
-                if units != 0
-            ]
-        )
+        holdings = self._holdings
+        portfoliostr = "Portfolio('%s')" % self.base_currency_code
+        assets_with_holdings = [
+            asset for asset, units in holdings.items()
+            if units != 0
+        ]
+        if len(assets_with_holdings) == 0:
+            return portfoliostr
+
+        return portfoliostr + ":\n" + "\n".join([
+                str(asset) + ": " + format(holdings[asset], ",d")
+                for asset in assets_with_holdings
+        ])
