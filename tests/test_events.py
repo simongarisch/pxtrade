@@ -2,7 +2,7 @@ import pytest
 from datetime import datetime
 from pytrade.assets import Stock, Portfolio, FxRate
 from pytrade.trade import ProposedTrade
-from pytrade.events.events import (
+from pytrade.events import (
     AssetPriceEvent,
     FxRateEvent,
     ProposedTradeEvent,
@@ -34,9 +34,14 @@ def test_asset_price_event():
         event.datetime = dt
     with pytest.raises(AttributeError):
         event.event_value = 2.65
+    with pytest.raises(AttributeError):
+        event.processed = True
 
     # can be processed
+    assert stock.price == 2.50
+    assert event.processed is False
     event.process()
+    assert event.processed is True
     assert stock.price == 2.60
     with pytest.raises(ValueError):
         event.process()  # cannot process twice
@@ -70,7 +75,9 @@ def test_fx_rate_event():
         event.event_value = 1.09
 
     # can be processed
+    assert event.processed is False
     event.process()
+    assert event.processed is True
     assert fx_rate.rate == 1.10
     with pytest.raises(ValueError):
         event.process()  # cannot process twice
