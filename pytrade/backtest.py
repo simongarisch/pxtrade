@@ -12,8 +12,18 @@ class Backtest:
     def set_indicator(self, indicator_name, event_value):
         self._indicators[indicator_name] = event_value
 
-    def _process_event(self, event):
-        event.process()
-
     def load_event(self, event):
         self._events_queue.put(event)
+
+    def process_events(self):
+        queue = self._events_queue
+        while True:
+            if queue.empty():
+                return
+            queue_item = self._events_queue.get()
+            _, event = queue_item
+            event.process()
+
+    @property
+    def num_events_loaded(self):
+        return len(self._events_queue)
