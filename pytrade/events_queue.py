@@ -1,5 +1,5 @@
 from queue import PriorityQueue
-from .events import AbstractEvent
+from pytrade import AbstractEvent
 
 
 class EventsQueue(PriorityQueue):
