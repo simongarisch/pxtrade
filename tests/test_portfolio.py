@@ -205,3 +205,4 @@ def test_portfolio_weight():
     assert portfolio.get_holding_weight("USD") == 0.5
     assert portfolio.get_holding_weight("ABC US") == 0.25
     assert portfolio.get_holding_weight("DEF US") == 0.25
+    assert portfolio.get_holding_weight("NOT A CODE") == 0
