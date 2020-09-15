@@ -1,7 +1,7 @@
 """
 Events such as changes in asset prices, fx rates and indicators will occur.
 All events must define methods _validate, _process, __str__.
-Events can only be processed once and will be associated with some backtest.
+Events can only be processed once.
 """
 from abc import ABC, abstractmethod
 from ..util import to_datetime
