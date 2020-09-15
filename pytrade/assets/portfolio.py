@@ -103,6 +103,16 @@ class Portfolio(Observer):
                 return units
         return 0
 
+    def get_holding_weight(self, asset_code):
+        asset_code = check_code(asset_code)
+        for asset, units in self._holdings.items():
+            if asset.code == asset_code:
+                fx_pair = self._base_currency_code + asset.currency_code
+                fx_rate = FxRate.get(fx_pair)
+                asset_value = asset.local_value / fx_rate * units
+                return asset_value / self._value
+        return 0
+
     def __str__(self):
         holdings = self._holdings
         portfoliostr = "Portfolio('%s')" % self.base_currency_code

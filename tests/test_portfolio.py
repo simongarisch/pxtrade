@@ -189,3 +189,19 @@ def test_portfolio_str():
     assert parts[0].strip() == part0
     assert parts[1].strip() == part1
     assert parts[2].strip() == part2
+
+
+def test_portfolio_weight():
+    portfolio = Portfolio("USD")
+    stock1 = Stock("ABC US", 2.00, currency_code="USD")
+    stock2 = Stock("DEF US", 2.00, currency_code="USD")
+    cash = Cash("USD")
+    portfolio.transfer(stock1, 100)
+    portfolio.transfer(stock2, 100)
+    assert portfolio.get_holding_weight("ABC US") == 0.5
+    assert portfolio.get_holding_weight("DEF US") == 0.5
+
+    portfolio.transfer(cash, 400)
+    assert portfolio.get_holding_weight("USD") == 0.5
+    assert portfolio.get_holding_weight("ABC US") == 0.25
+    assert portfolio.get_holding_weight("DEF US") == 0.25
