@@ -28,3 +28,4 @@ def test_backtest_num_events_loaded():
     assert backtest.num_events_loaded == 3
     backtest.process_events()
     assert stock.price == 2.70
+    assert backtest.num_events_loaded == 0
