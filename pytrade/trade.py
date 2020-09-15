@@ -9,11 +9,12 @@ def _check_asset(asset: Union[Asset, str]):
     """
     if isinstance(asset, Asset):
         return asset
-    if not isinstance(asset, str):
+    asset_code = asset
+    if not isinstance(asset_code, str):
         raise TypeError("Expecting Asset instance or asset code.")
-    asset = Asset.get_asset_for_code(asset)
+    asset = Asset.get_asset_for_code(asset_code)
     if asset is None:
-        raise ValueError("Asset code '%s' doesn't exist." % asset)
+        raise ValueError("Asset code '%s' doesn't exist." % asset_code)
     return asset
 
 
