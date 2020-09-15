@@ -20,7 +20,7 @@ class Backtest:
         while True:
             if queue.empty():
                 return
-            queue_item = self._events_queue.get()
+            queue_item = queue.get()
             _, event = queue_item
             event.process()
 
