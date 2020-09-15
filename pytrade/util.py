@@ -25,7 +25,7 @@ def check_positive_numeric(x):
 
 def to_datetime(t):
     """ Convert some object representing a datetime
-        to a python datetime object. Often times are represented as
+        to a Python datetime object. Often times are represented as
         np.datetime64 or pd.Timestamp objects.
     """
     if isinstance(t, pd.Timestamp):
