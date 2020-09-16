@@ -18,12 +18,12 @@ def _check_asset(asset: Union[Asset, str]):
     return asset
 
 
-class ProposedTrade:
+class Trade:
     def __init__(self, portfolio, asset, units):
         if not isinstance(portfolio, Portfolio):
             raise TypeError("Expecting a Portfolio instance.")
         if not isinstance(units, int):
-            raise TypeError("Units for proposed trade must be an integer.")
+            raise TypeError("Units for trade must be an integer.")
         self._portfolio = portfolio
         asset = self._asset = _check_asset(asset)
         self._asset_code = asset.code

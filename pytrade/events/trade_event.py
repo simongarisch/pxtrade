@@ -1,11 +1,11 @@
 from .base import AbstractEvent
-from ..trade import ProposedTrade
+from ..trade import Trade
 
 
-class ProposedTradeEvent(AbstractEvent):
+class TradeEvent(AbstractEvent):
     def _validate(self, event_value):
-        if not isinstance(event_value, ProposedTrade):
-            raise TypeError("Expecting ProposedTrade instance.")
+        if not isinstance(event_value, Trade):
+            raise TypeError("Expecting Trade instance.")
 
     def _process(self):
         pass  # TODO

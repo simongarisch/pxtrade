@@ -1,63 +1,63 @@
 import pytest
 from pytrade.assets import Stock, Portfolio
-from pytrade.trade import ProposedTrade
+from pytrade.trade import Trade
 
 
 class TestTrade(object):
     def setup_method(self, *args):
         portfolio = self.portfolio = Portfolio("AAA")
         self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
-        self.proposed_trade = ProposedTrade(portfolio, "ZZB AU", 100)
+        self.trade = Trade(portfolio, "ZZB AU", 100)
 
     def teardown_method(self, *args):
         del self.stock
         del self.portfolio
-        del self.proposed_trade
+        del self.trade
 
     def test_proposed_trade_init(self):
-        proposed_trade = self.proposed_trade
-        assert proposed_trade.portfolio is self.portfolio
-        assert proposed_trade.asset is self.stock
-        assert proposed_trade.asset_code == "ZZB AU"
-        assert proposed_trade.units == 100
+        trade = self.trade
+        assert trade.portfolio is self.portfolio
+        assert trade.asset is self.stock
+        assert trade.asset_code == "ZZB AU"
+        assert trade.units == 100
 
     def test_proposed_trade_init_with_asset(self):
-        proposed_trade = ProposedTrade(
+        trade = Trade(
             self.portfolio, self.stock, 300,
         )
-        assert proposed_trade.portfolio is self.portfolio
-        assert proposed_trade.asset is self.stock
-        assert proposed_trade.asset_code == "ZZB AU"
-        assert proposed_trade.units == 300
+        assert trade.portfolio is self.portfolio
+        assert trade.asset is self.stock
+        assert trade.asset_code == "ZZB AU"
+        assert trade.units == 300
         with pytest.raises(TypeError):
-            ProposedTrade("Portfolio", self.stock, 100)
+            Trade("Portfolio", self.stock, 100)
         with pytest.raises(TypeError):
-            ProposedTrade(self.portfolio, 123, 100)
+            Trade(self.portfolio, 123, 100)
 
     def test_proposed_trade_immutable(self):
-        proposed_trade = self.proposed_trade
+        trade = self.trade
         with pytest.raises(AttributeError):
-            proposed_trade.portfolio = self.portfolio
+            trade.portfolio = self.portfolio
         with pytest.raises(AttributeError):
-            proposed_trade.asset = self.stock
+            trade.asset = self.stock
         with pytest.raises(AttributeError):
-            proposed_trade.asset_code = "ZZB AU"
+            trade.asset_code = "ZZB AU"
         with pytest.raises(AttributeError):
-            proposed_trade.units = 500
+            trade.units = 500
 
     def test_proposed_trade_no_asset(self):
         with pytest.raises(ValueError):
-            ProposedTrade(
+            Trade(
                 self.portfolio, "NO_ASSET_WITH_THIS_CODE", 200
             )
 
     def test_units_must_be_int(self):
         with pytest.raises(TypeError):
-            ProposedTrade(
+            Trade(
                 self.portfolio, "ZZB AU", "100"
             )
 
     def test_trade_str(self):
-        tradestr = str(self.proposed_trade)
+        tradestr = str(self.trade)
         print(tradestr)
-        assert tradestr == "ProposedTrade(Portfolio('AAA'), 'ZZB AU', 100)"
+        assert tradestr == "Trade(Portfolio('AAA'), 'ZZB AU', 100)"
