@@ -49,6 +49,12 @@ class TestCompliance(object):
         compliance.remove_rule(rule)
         assert compliance.passes(portfolio)
 
+    def test_unit_limit_str(self):
+        rule = UnitLimit(self.stock1, 200)
+        assert str(rule) == "UnitLimit('BBB US', 200)"
+        rule = UnitLimit(self.stock1, 1000)
+        assert str(rule) == "UnitLimit('BBB US', 1,000)"
+
     def test_weight_limit(self):
         with pytest.raises(TypeError):
             # Requires an Asset instance
@@ -67,3 +73,7 @@ class TestCompliance(object):
         assert not compliance.passes(portfolio)
         compliance.remove_rule(rule)
         assert compliance.passes(portfolio)
+
+    def test_weight_limit_str(self):
+        rule = WeightLimit(self.stock2, 0.50)
+        assert str(rule) == "WeightLimit('CCC US', 0.50)"

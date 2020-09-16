@@ -19,6 +19,14 @@ class UnitLimit(ComplianceRule):
             return False
         return True
 
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "('%s', %s)" % (
+                self._asset.code, "{:,}".format(self._unit_limit)
+            )
+        )
+
 
 class WeightLimit(ComplianceRule):
     def __init__(self, asset, weight_limit):
@@ -35,3 +43,9 @@ class WeightLimit(ComplianceRule):
         if abs(weight) > self._weight_limit:
             return False
         return True
+
+    def __str__(self):
+        return (
+            self.__class__.__name__
+            + "('%s', %0.2f)" % (self._asset.code, self._weight_limit)
+        )
