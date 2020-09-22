@@ -7,7 +7,7 @@ the revalue method is called.
 from collections import defaultdict
 from numbers import Real
 from .asset import Asset, VariablePriceAsset
-from .cash import Cash
+from .cash import get_cash
 from .codes import check_code, check_currency_code
 from .fx_rates import FxRate, is_equivalent_pair
 from ..observable import Observer
@@ -52,16 +52,7 @@ class Portfolio(Observer):
         if not isinstance(consideration, Real):
             raise TypeError("Expecting numeric consideration.")
 
-        currency_code = asset.currency_code
-        cash = Asset.get_asset_for_code(currency_code)
-        if cash is not None:
-            if not isinstance(cash, Cash):
-                raise TypeError(
-                    "Currency code '%s' is reserved for cash." % currency_code
-                )
-        else:
-            cash = Cash(currency_code)
-
+        cash = get_cash(asset.currency_code)
         self._holdings[asset] += units
         self._holdings[cash] += consideration
         self._check_observable(asset)
