@@ -29,6 +29,7 @@ class Trade:
         asset = self._asset = _check_asset(asset)
         self._asset_code = asset.code
         self._status = TradeState.Proposed
+        self._passed_compliance = False
         self._units = units
         self._done = 0
 
@@ -47,6 +48,18 @@ class Trade:
     @property
     def units(self):
         return self._units
+
+    @property
+    def done(self):
+        return self._done
+
+    @property
+    def status(self):
+        return self._status
+
+    @property
+    def passed_compliance(self):
+        return self._passed_compliance
 
     def __str__(self):
         return (
