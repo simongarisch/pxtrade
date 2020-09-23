@@ -6,7 +6,7 @@ Here compliance rules have been arranged using a composite pattern
 to check portfolio positions should the trade be fully executed.
 """
 from abc import ABC, abstractmethod
-from ..assets import Portfolio
+from .. import assets
 
 
 class ComplianceRule(ABC):
@@ -26,12 +26,14 @@ class Compliance(ComplianceRule):
         if not isinstance(rule, ComplianceRule):
             raise TypeError("Expecting Compliance Rule instance.")
         self._rules.add(rule)
+        return self
 
     def remove_rule(self, rule):
         self._rules.discard(rule)
+        return self
 
     def passes(self, portfolio):
-        if not isinstance(portfolio, Portfolio):
+        if not isinstance(portfolio, assets.Portfolio):
             raise TypeError("Expecting Portfolio instance.")
 
         for rule in self._rules:

@@ -1,12 +1,10 @@
 from .events_queue import EventsQueue
-from pytrade.compliance import Compliance
 
 
 class Backtest:
     def __init__(self):
         self._indicators = dict()
         self._events_queue = EventsQueue()
-        self.compliance = Compliance()
 
     def get_indicator(self, indicator_name):
         return self._indicators.get(indicator_name)

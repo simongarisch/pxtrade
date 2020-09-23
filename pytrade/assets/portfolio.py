@@ -12,6 +12,7 @@ from .codes import check_code, check_currency_code
 from .fx_rates import FxRate, is_equivalent_pair
 from ..observable import Observer
 from ..settings import get_default_currency_code
+from .. compliance import Compliance
 
 
 class Portfolio(Observer):
@@ -23,6 +24,7 @@ class Portfolio(Observer):
         self._base_currency_code = check_currency_code(base_currency_code)
         self._holdings = defaultdict(lambda: 0)
         self._value = 0
+        self._compliance = Compliance()  # empty by default
 
     @property
     def value(self):
@@ -33,6 +35,16 @@ class Portfolio(Observer):
     def base_currency_code(self):
         """ base_currency_code is read only after init. """
         return self._base_currency_code
+
+    @property
+    def compliance(self):
+        return self._compliance
+
+    @compliance.setter
+    def compliance(self, compliance):
+        if not isinstance(compliance, Compliance):
+            raise TypeError("Expecting Compliance instance.")
+        self._compliance = compliance
 
     def transfer(self, asset, units):
         self.trade(asset, units, consideration=0)
