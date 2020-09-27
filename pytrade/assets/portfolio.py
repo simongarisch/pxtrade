@@ -7,7 +7,7 @@ the revalue method is called.
 from collections import defaultdict
 from numbers import Real
 from .asset import Asset, VariablePriceAsset
-from .cash import get_cash
+from .cash import Cash, get_cash
 from .codes import check_code, check_currency_code
 from .fx_rates import FxRate, is_equivalent_pair
 from ..observable import Observer
@@ -52,8 +52,13 @@ class Portfolio(Observer):
     def trade(self, asset, units, consideration=None):
         if not isinstance(asset, Asset):
             raise TypeError("Expecting Asset instance.")
-        if not isinstance(units, int):
-            raise TypeError("Expecting int.")
+        if not isinstance(asset, Cash):
+            # non-cash assets must be traded in whole units
+            if not isinstance(units, int):
+                raise TypeError("Expecting int.")
+        else:
+            if not isinstance(units, Real):
+                raise TypeError("Expecting numeric value.")
 
         if consideration is None:
             asset_local_value = asset.local_value
