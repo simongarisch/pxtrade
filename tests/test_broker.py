@@ -1,7 +1,11 @@
 import pytest
 from pytrade import Trade, Broker
 from pytrade.assets import Stock, Cash, FxRate, Portfolio
-from pytrade.broker import FillAtLastWithSlippage, FixedRatePlusPercentage
+from pytrade.broker import (
+    AbstractCharges,
+    FillAtLastWithSlippage,
+    FixedRatePlusPercentage,
+)
 
 
 class TestBroker(object):
@@ -109,3 +113,15 @@ class TestBroker(object):
         assert get_holding_units("TEST AU") == 0
         assert get_holding_units("AUD") == 1000
         assert get_holding_units("USD") == -(20 + usd_perc_charge) * 2
+
+    def test_charge_types(self):
+        with pytest.raises(TypeError):
+            FixedRatePlusPercentage("10", 0.01)
+        with pytest.raises(TypeError):
+            FixedRatePlusPercentage(10, "0.01")
+        with pytest.raises(ValueError):
+            FixedRatePlusPercentage(-10, 0.01)
+        with pytest.raises(ValueError):
+            FixedRatePlusPercentage(10, -0.01)
+        charges_strategy = FixedRatePlusPercentage(10, 0.01)
+        assert isinstance(charges_strategy, AbstractCharges)
