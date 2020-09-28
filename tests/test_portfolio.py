@@ -1,5 +1,6 @@
 import pytest
 from pytrade.assets import FxRate, Stock, Cash, Portfolio
+from pytrade.compliance import Compliance
 from pytrade.settings import get_default_currency_code
 
 
@@ -149,10 +150,13 @@ def test_default_currency_code():
 def test_trade_types():
     portfolio = Portfolio("AUD")
     stock = Stock("ZZX AU", 2.50, currency_code="AUD")
+    cash = Cash("GBP")
     with pytest.raises(TypeError):
         portfolio.trade(None, units=1)
     with pytest.raises(TypeError):
         portfolio.trade(stock, units="1")
+    with pytest.raises(TypeError):
+        portfolio.trade(cash, units="1")
 
     stock.price = None
     with pytest.raises(ValueError):
@@ -206,3 +210,14 @@ def test_portfolio_weight():
     assert portfolio.get_holding_weight("ABC US") == 0.25
     assert portfolio.get_holding_weight("DEF US") == 0.25
     assert portfolio.get_holding_weight("NOT A CODE") == 0
+
+
+def test_portfolio_compliance():
+    portfolio = Portfolio("USD")
+    compliance = portfolio.compliance
+    assert isinstance(compliance, Compliance)
+    new_compliance = Compliance()
+    portfolio.compliance = new_compliance
+    assert portfolio.compliance is new_compliance
+    with pytest.raises(TypeError):
+        portfolio.compliance = None
