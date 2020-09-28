@@ -1,12 +1,8 @@
 """ A strategy pattern for charges applied in trade execution. """
 from abc import ABC, abstractmethod
 from numbers import Real
-from pytrade.assets import (
-    get_cash,
-    check_currency_code,
-    FxRate,
-)
 from ..settings import get_default_currency_code
+from .. import assets
 
 
 class AbstractCharges(ABC):
@@ -36,7 +32,7 @@ class FixedRatePlusPercentage(AbstractCharges):
         self._percentage = percentage
         if currency_code is None:
             currency_code = get_default_currency_code()
-        self._currency_code = check_currency_code(currency_code)
+        self._currency_code = assets.check_currency_code(currency_code)
 
     def charge(self, trade):
         asset = trade.asset
@@ -46,10 +42,10 @@ class FixedRatePlusPercentage(AbstractCharges):
         portfolio = trade.portfolio
 
         # calculate total charges
-        charge_cash = get_cash(charge_currency_code)
+        charge_cash = assets.get_cash(charge_currency_code)
         local_value_traded = abs(asset.local_value * units)
         percentage_charge_local = abs(self._percentage * local_value_traded)
-        fx_rate = FxRate.get(asset_currency_code + charge_currency_code)
+        fx_rate = assets.FxRate.get(asset_currency_code + charge_currency_code)
         percentage_charge = percentage_charge_local * fx_rate
 
         total_charge = self._fixed_amount + percentage_charge
