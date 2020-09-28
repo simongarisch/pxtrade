@@ -107,6 +107,13 @@ def test_proposed_trade_event():
     with pytest.raises(AttributeError):
         event.event_value = trade
 
+    # process the trade
+    assert portfolio.get_holding_units("GOOG US") == 0
+    assert portfolio.get_holding_units("USD") == 0
+    event.process()
+    assert portfolio.get_holding_units("GOOG US") == 100
+    assert portfolio.get_holding_units("USD") == -1500 * 100
+
 
 def test_indicator_event():
     dt = datetime(2020, 9, 1, 12, 30)

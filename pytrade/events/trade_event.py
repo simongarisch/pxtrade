@@ -1,5 +1,5 @@
 from .base import AbstractEvent
-from ..trade import Trade
+from pytrade.trade import Trade, trade_pipeline
 
 
 class TradeEvent(AbstractEvent):
@@ -8,7 +8,8 @@ class TradeEvent(AbstractEvent):
             raise TypeError("Expecting Trade instance.")
 
     def _process(self):
-        pass  # TODO
+        trade = self._event_value
+        trade_pipeline.run(trade)
 
     def __str__(self):
         return (

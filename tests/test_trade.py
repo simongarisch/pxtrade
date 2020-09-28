@@ -20,9 +20,15 @@ class TestTrade(object):
         assert trade.asset is self.stock
         assert trade.asset_code == "ZZB AU"
         assert trade.units == 100
-        assert trade.done == 0
         assert trade.status is TradeState.Proposed
+
+    def test_passed_compliance(self):
+        trade = self.trade
         assert trade.passed_compliance is False
+        trade.passed_compliance = True
+        assert trade.passed_compliance is True
+        with pytest.raises(TypeError):
+            trade.passed_compliance = 42
 
     def test_proposed_trade_init_with_asset(self):
         trade = Trade(

@@ -31,7 +31,6 @@ class Trade:
         self._status = TradeState.Proposed
         self._passed_compliance = False
         self._units = units
-        self._done = 0
 
     @property
     def portfolio(self):
@@ -50,16 +49,21 @@ class Trade:
         return self._units
 
     @property
-    def done(self):
-        return self._done
-
-    @property
     def status(self):
         return self._status
 
     @property
     def passed_compliance(self):
         return self._passed_compliance
+
+    @passed_compliance.setter
+    def passed_compliance(self, passed_compliance):
+        if not isinstance(passed_compliance, bool):
+            raise TypeError("Expecting boolean.")
+        self._passed_compliance = passed_compliance
+
+    def execute(self):
+        self._portfolio.broker.execute(self)
 
     def __str__(self):
         return (
