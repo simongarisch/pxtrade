@@ -1,3 +1,4 @@
+import pytest
 from pytrade import Trade, Broker
 from pytrade.assets import Stock, Cash, FxRate, Portfolio
 from pytrade.broker import FillAtLastWithSlippage, FixedRatePlusPercentage
@@ -33,6 +34,9 @@ class TestBroker(object):
         assert portfolio.value == 1000
         assert portfolio.get_holding_units("TEST AU") == 0
         assert portfolio.get_holding_units("AUD") == 1000
+
+        with pytest.raises(TypeError):
+            broker.execute("trade")
 
     def test_broker_with_slippage(self):
         """
