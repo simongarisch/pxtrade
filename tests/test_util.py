@@ -6,6 +6,7 @@ from pytrade.util import (
     clean_string,
     check_positive_numeric,
     to_datetime,
+    memento,
 )
 
 
@@ -34,3 +35,23 @@ def test_to_datetime():
     assert to_datetime(pddt) == dt
     with pytest.raises(TypeError):
         to_datetime("xxx")
+
+
+def test_memento():
+    class Test:
+        pass
+
+    obj = Test()
+    obj.x = 1
+    obj.y = 2
+    restore = memento(obj)
+
+    obj.x = 7
+    obj.y = 8
+    obj.z = 9
+
+    restore()
+    assert obj.x == 1
+    assert obj.y == 2
+    with pytest.raises(AttributeError):
+        obj.z

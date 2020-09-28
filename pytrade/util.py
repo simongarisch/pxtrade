@@ -1,5 +1,6 @@
 from numbers import Real
 from datetime import datetime
+from copy import deepcopy
 import pandas as pd
 import numpy as np
 
@@ -35,3 +36,14 @@ def to_datetime(t):
     if isinstance(t, datetime):
         return t
     raise TypeError("Unrecognised time object: " + str(t))
+
+
+def memento(obj):
+    """ A memento pattern to restore objects. """
+    state = deepcopy(obj.__dict__)
+
+    def restore():
+        obj.__dict__.clear()
+        obj.__dict__.update(state)
+
+    return restore
