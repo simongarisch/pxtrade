@@ -2,6 +2,7 @@ import pytest
 from pytrade import Trade, Broker
 from pytrade.assets import Stock, Cash, FxRate, Portfolio
 from pytrade.broker import (
+    AbstractExecution,
     AbstractCharges,
     FillAtLastWithSlippage,
     FixedRatePlusPercentage,
@@ -125,3 +126,11 @@ class TestBroker(object):
             FixedRatePlusPercentage(10, -0.01)
         charges_strategy = FixedRatePlusPercentage(10, 0.01)
         assert isinstance(charges_strategy, AbstractCharges)
+
+    def test_execution_types(self):
+        execution_strategy = FillAtLastWithSlippage(0.01)
+        assert isinstance(execution_strategy, AbstractExecution)
+        with pytest.raises(TypeError):
+            FillAtLastWithSlippage("0.01")
+        with pytest.raises(ValueError):
+            FillAtLastWithSlippage(-0.01)
