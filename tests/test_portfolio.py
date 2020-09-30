@@ -1,6 +1,7 @@
 import pytest
 from pytrade.assets import FxRate, Stock, Cash, Portfolio
 from pytrade.compliance import Compliance
+from pytrade.broker import Broker
 from pytrade.settings import get_default_currency_code
 
 
@@ -221,3 +222,14 @@ def test_portfolio_compliance():
     assert portfolio.compliance is new_compliance
     with pytest.raises(TypeError):
         portfolio.compliance = None
+
+
+def test_portfolio_broker():
+    portfolio = Portfolio("USD")
+    broker = portfolio.broker
+    assert isinstance(broker, Broker)
+    new_broker = Broker()
+    portfolio.broker = new_broker
+    assert portfolio.broker is new_broker
+    with pytest.raises(TypeError):
+        portfolio.broker = None
