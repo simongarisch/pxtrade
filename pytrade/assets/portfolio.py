@@ -144,6 +144,6 @@ class Portfolio(Observer):
             return portfoliostr
 
         return portfoliostr + ":\n" + "\n".join([
-                str(asset) + ": " + format(holdings[asset], ",d")
+                str(asset) + ": " + "{0:,.0f}".format(holdings[asset])
                 for asset in assets_with_holdings
         ])
