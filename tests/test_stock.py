@@ -2,6 +2,6 @@ from pytrade.assets import Stock
 
 
 def test_stock_str():
-    zzb = Stock("ZZB AU", 2.55, currency_code="AUD")
-    zzb_str = str(zzb)
-    assert zzb_str == "Stock('ZZB AU', 2.55, currency_code='AUD')"
+    stock = Stock("QQQ AU", 2.55, currency_code="AUD")
+    stock_str = str(stock)
+    assert stock_str == "Stock('QQQ AU', 2.55, currency_code='AUD')"
