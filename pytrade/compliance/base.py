@@ -40,3 +40,6 @@ class Compliance(ComplianceRule):
             if not rule.passes(portfolio):
                 return False
         return True
+
+    def __len__(self):
+        return len(self._rules)
