@@ -1,6 +1,12 @@
 import pytest
 from pytrade import Trade, Broker
-from pytrade.assets import Stock, Cash, FxRate, Portfolio
+from pytrade.assets import (
+    Asset,
+    Stock,
+    Cash,
+    FxRate,
+    Portfolio,
+)
 from pytrade.broker import (
     AbstractExecution,
     AbstractCharges,
@@ -12,7 +18,11 @@ from pytrade.broker import (
 class TestBroker(object):
     def setup_method(self, *args):
         portfolio = self.portfolio = Portfolio("AUD")
-        aud = self.aud = Cash("AUD")
+        aud = Asset.get_asset_for_code("AUD")
+        if aud is not None:
+            self.aud = aud
+        else:
+            aud = self.aud = Cash("AUD")
         portfolio.transfer(aud, 1000)
         stock = self.stock = Stock("TEST AU", 2.50, currency_code="AUD")
         self.buy_trade = Trade(portfolio, stock, 100)

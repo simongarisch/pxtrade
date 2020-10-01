@@ -1,8 +1,10 @@
-from pytrade.assets import Cash
+from pytrade.assets import Asset, Cash
 
 
 def test_cash():
-    aud = Cash("AUD")
+    aud = Asset.get_asset_for_code("AUD")
+    if aud is None:
+        aud = Cash("AUD")
     assert aud.code == "AUD"
     assert aud.currency_code == "AUD"
     assert aud.local_value == 1.0

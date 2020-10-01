@@ -1,12 +1,14 @@
 import pytest
-from pytrade.assets import Stock, Portfolio
-from pytrade.trade import Trade, TradeState
+from pytrade.assets import Asset, Stock, Portfolio
+from pytrade.trade import Trade
 
 
 class TestTrade(object):
     def setup_method(self, *args):
         portfolio = self.portfolio = Portfolio("AAA")
-        self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
+        stock = self.stock = Asset.get_asset_for_code("ZZB AU")
+        if stock is None:
+            stock = self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
         self.trade = Trade(portfolio, "ZZB AU", 100)
 
     def teardown_method(self, *args):
@@ -20,7 +22,6 @@ class TestTrade(object):
         assert trade.asset is self.stock
         assert trade.asset_code == "ZZB AU"
         assert trade.units == 100
-        assert trade.status is TradeState.Proposed
 
     def test_passed_compliance(self):
         trade = self.trade
@@ -68,5 +69,4 @@ class TestTrade(object):
 
     def test_trade_str(self):
         tradestr = str(self.trade)
-        print(tradestr)
         assert tradestr == "Trade(Portfolio('AAA'), 'ZZB AU', 100)"
