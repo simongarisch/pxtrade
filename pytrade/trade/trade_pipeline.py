@@ -2,9 +2,9 @@
 Each trade needs to go through a sequence of steps before being sent
 for execution. Trade creation -> run compliance -> execution.
 """
+from copy import deepcopy
 from abc import ABC, abstractmethod
 from pytrade.trade import Trade
-from pytrade.util import memento
 
 
 class Handler(ABC):
@@ -36,18 +36,21 @@ class ComplianceHandler(Handler):
     check is complete.
     """
     def handle(self, trade):
-        portfolio = trade.portfolio
-        compliance = portfolio.compliance
-        restore_portfolio = memento(portfolio)
-
-        trade.execute()
-        trade.passes_compliance = compliance.passes(portfolio)
-        restore_portfolio()
+        if len(trade.portfolio.compliance) > 0:
+            # mock execute the trade and run compliance
+            trade_copy = deepcopy(trade)
+            portfolio = trade_copy.portfolio
+            compliance = portfolio.compliance
+            trade_copy.execute()
+            trade.passed_compliance = compliance.passes(trade_copy.portfolio)
+        else:
+            trade.passed_compliance = True
 
 
 class ExecutionHandler(Handler):
     def handle(self, trade):
-        trade.execute()
+        if trade.passed_compliance:
+            trade.execute()
 
 
 def make_trade_pipeline():
