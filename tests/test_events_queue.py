@@ -20,7 +20,6 @@ def test_queue_order():
     _, third = queue.get()
     assert len(queue) == 0
 
-    print(first)
     assert first is event2
     assert second is event3
     assert third is event1
