@@ -43,7 +43,6 @@ class Backtest:
         peek_next_event_datetime = self._peek_next_event_datetime
         process_next_event = self._process_next_event
         current_datetime = self._datetime
-        print(current_datetime, peek_next_event_datetime())
         while current_datetime == peek_next_event_datetime():
             process_next_event()
 
