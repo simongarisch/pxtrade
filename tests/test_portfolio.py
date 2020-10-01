@@ -6,20 +6,24 @@ from pytrade.settings import get_default_currency_code
 
 
 class TestPortfolio(object):
+
     def setup_method(self, *args):
         self.portfolio = Portfolio("AUD")
 
         aud = self.aud = Asset.get_asset_for_code("AUD")
         usd = self.usd = Asset.get_asset_for_code("USD")
-        self.audusd = FxRate("AUDUSD", 0.70)
+        try:
+            self.audusd = FxRate.get_instance("AUDUSD")
+        except:  # noqa: E722
+            self.audusd = FxRate("AUDUSD", 0.70)
 
         stock_aud = self.stock_aud = Asset.get_asset_for_code("ZZB AU")
         stock_usd = self.stock_usd = Asset.get_asset_for_code("ZZB US")
 
         if aud is None:
-            aud = Cash("AUD")
+            self.aud = Cash("AUD")
         if usd is None:
-            usd = Cash("USD")
+            self.usd = Cash("USD")
         if stock_aud is None:
             self.stock_aud = Stock("ZZB AU", 2.50, currency_code="AUD")
         if stock_usd is None:
@@ -29,7 +33,6 @@ class TestPortfolio(object):
         del self.portfolio
         del self.aud
         del self.usd
-        del self.audusd
         del self.stock_aud
         del self.stock_usd
 
