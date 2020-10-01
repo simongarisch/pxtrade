@@ -1,7 +1,6 @@
 """ Defines a proposed trade. """
 from typing import Union
 from pytrade.assets import Asset, Portfolio
-from .state import TradeState
 
 
 def _check_asset(asset: Union[Asset, str]):
@@ -28,7 +27,6 @@ class Trade:
         self._portfolio = portfolio
         asset = self._asset = _check_asset(asset)
         self._asset_code = asset.code
-        self._status = TradeState.Proposed
         self._passed_compliance = False
         self._units = units
 
