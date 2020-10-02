@@ -1,5 +1,6 @@
 from numbers import Real
 from datetime import datetime
+from datetime import date as datetime_date
 from copy import deepcopy
 import pandas as pd
 import numpy as np
@@ -11,6 +12,14 @@ def clean_string(s: str) -> str:
     'XYZ'
     """
     return str(s).strip().upper()
+
+
+def clean_column_name(column):
+    """ Cleans and returns a dataframe column name.
+    >>> clean_column_name("Adj Close")
+    'adj_close'
+    """
+    return str(column).strip().lower().replace(" ", "_")
 
 
 def check_positive_numeric(x):
@@ -35,6 +44,8 @@ def to_datetime(t):
         return pd.Timestamp(t).to_pydatetime()
     if isinstance(t, datetime):
         return t
+    if isinstance(t, datetime_date):
+        return datetime.combine(t, datetime.min.time())
     raise TypeError("Unrecognised time object: " + str(t))
 
 
