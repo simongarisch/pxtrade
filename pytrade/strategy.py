@@ -1,5 +1,5 @@
 """
-Defines a strategy for out backtest.
+Defines a strategy for our backtest.
 Each strategy will return trades to be executed.
 """
 from abc import ABC, abstractmethod
