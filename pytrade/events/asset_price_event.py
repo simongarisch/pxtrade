@@ -3,7 +3,7 @@ from ..util import check_positive_numeric
 
 
 class AssetPriceEvent(AbstractEvent):
-    def __init__(self, asset, datetime, event_value):
+    def __init__(self, asset, datetime, event_value, **kwargs):
         super().__init__(datetime, event_value)
         self._asset = asset
 

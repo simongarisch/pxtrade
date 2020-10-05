@@ -43,3 +43,6 @@ class AbstractEvent(ABC):
     @abstractmethod
     def __str__(self):
         raise NotImplementedError()  # pragma: no cover
+
+    def __lt__(self, other):
+        return self._datetime < other._datetime

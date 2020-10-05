@@ -10,6 +10,7 @@ class IndicatorEvent(AbstractEvent):
         *,
         backtest=None,
         validation_func=None,
+        **kwargs,
     ):
         if not isinstance(indicator_name, str):
             raise TypeError("Expecting string.")
@@ -31,6 +32,8 @@ class IndicatorEvent(AbstractEvent):
             self._validation_func(event_value)
 
     def _process(self):
+        if self._backtest is None:
+            return
         self._backtest.set_indicator(
             self._indicator_name, self.event_value
         )

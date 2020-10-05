@@ -11,6 +11,7 @@ class Asset(ABC):
         Each asset type must define it's own local_value property.
     """
     _codes = Codes()
+    yahoo_ticker = None
 
     @classmethod
     def get_asset_for_code(cls, code):

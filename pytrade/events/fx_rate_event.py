@@ -4,7 +4,7 @@ from ..util import check_positive_numeric
 
 
 class FxRateEvent(AbstractEvent):
-    def __init__(self, fx_rate, datetime, event_value):
+    def __init__(self, fx_rate, datetime, event_value, **kwargs):
         super().__init__(datetime, event_value)
         if not isinstance(fx_rate, FxRate):
             raise TypeError("Expecting FxRate instance.")
