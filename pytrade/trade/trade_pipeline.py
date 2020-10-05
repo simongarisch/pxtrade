@@ -39,10 +39,12 @@ class ComplianceHandler(Handler):
         if len(trade.portfolio.compliance) > 0:
             # mock execute the trade and run compliance
             trade_copy = deepcopy(trade)
+            trade_copy.is_mock_trade = True
             portfolio = trade_copy.portfolio
             compliance = portfolio.compliance
             trade_copy.execute()
             trade.passed_compliance = compliance.passes(trade_copy.portfolio)
+            # print(trade, trade.passed_compliance)
         else:
             trade.passed_compliance = True
 
