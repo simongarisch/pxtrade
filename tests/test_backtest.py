@@ -78,8 +78,24 @@ def test_backtest_strategy_with_compliance():
     portfolio.compliance = compliance
 
     backtest = Backtest(BasicStrategy())
+    assert backtest.datetime is None
+    # there are currently no events to process
+    assert backtest._process_next_event() is False
+
+    # load events
     [backtest.load_event(event) for event in events]
     backtest.run()
     # we can't buy the 3rd share as our compliance unit limit is 2
     assert portfolio.get_holding_units("JJJ AU") == 2
     assert portfolio.get_holding_units("AUD") == -(2.50 + 2.60)
+    assert backtest.datetime == datetime(2020, 9, 3)
+
+
+def test_backtest_no_trades_strategy():
+    class NoTradesStrategy(Strategy):
+        def generate_trades(self):
+            # always buy 1 share of 'JJJ AU'
+            return None
+
+    backtest = Backtest(NoTradesStrategy())
+    assert backtest._run_strategy() is None

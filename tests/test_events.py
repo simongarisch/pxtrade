@@ -145,6 +145,7 @@ def test_indicator_event_validation():
     )
     assert event.datetime is dt
     assert event.event_value == "IndicatorValue"
+    assert event._process() is None  # no associated backtest
 
     # event value must pass valiadation_func validation
     with pytest.raises(TypeError):

@@ -65,12 +65,12 @@ def test_buy_spy_with_indicator():
     # load price events from yahoo for spy, audusd, vix
     start_date = date(2020, 9, 1)
     end_date = date(2020, 10, 1)
-    for attribute in [spy, audusd, "^VIX"]:
-        load_yahoo_prices(
-            attribute, backtest,
-            start_date=start_date,
-            end_date=end_date,
-        )
+    load_yahoo_prices(
+        [spy, audusd, "^VIX"],
+        backtest,
+        start_date=start_date,
+        end_date=end_date,
+    )
 
     # run the backtest and check pnl
     backtest.run()
