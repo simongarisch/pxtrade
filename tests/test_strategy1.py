@@ -8,7 +8,7 @@ PNL = (337.04 - 351.19) * 100 = -USD 1,415
 """
 from datetime import date
 from pytrade import Trade
-from pytrade.assets import Stock, Portfolio
+from pytrade.assets import Asset, Stock, Portfolio
 from pytrade.backtest import Backtest
 from pytrade.strategy import Strategy
 from pytrade.events.yahoo import load_yahoo_prices
@@ -17,6 +17,7 @@ from pytrade.compliance import Compliance, UnitLimit
 
 def test_buy_and_hold():
     # create your stock and portfolio
+    Asset.reset()
     spy = Stock("SPY", currency_code="USD")
     portfolio = Portfolio("USD")
 

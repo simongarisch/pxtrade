@@ -1,6 +1,5 @@
 """
-Here we test a basic buy and hold strategy that includes an indicator
-and FX rate movements.
+Here we test a basic strategy that includes an indicator and FX rate movements.
 
 We'll start with an ($100K) AUD denominated portfolio and buy 100 shares of SPY
 only if the VIX < 26.
@@ -20,7 +19,7 @@ Points to note:
 """
 from datetime import date
 from pytrade import Trade
-from pytrade.assets import Stock, Cash, FxRate, Portfolio
+from pytrade.assets import Asset, Stock, Cash, FxRate, Portfolio
 from pytrade.backtest import Backtest
 from pytrade.strategy import Strategy
 from pytrade.events.yahoo import load_yahoo_prices
@@ -29,6 +28,7 @@ from pytrade.compliance import Compliance, UnitLimit
 
 def test_buy_spy_with_indicator():
     # create your stock and portfolio
+    Asset.reset()
     spy = Stock("SPY", currency_code="USD")
     aud = Cash("AUD")
     usd = Cash("USD")

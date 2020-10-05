@@ -28,6 +28,9 @@ class Codes:
     def __init__(self):
         self._codes = WeakValueDictionary()
 
+    def reset(self):
+        self._codes = WeakValueDictionary()
+
     def register(self, code, associated_object) -> None:
         code = check_code(code)
         if self.code_in_use(code):

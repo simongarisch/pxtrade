@@ -2,6 +2,7 @@ from typing import Union
 from numbers import Real
 from abc import ABC, abstractproperty
 from .codes import check_code, check_currency_code, Codes
+from .fx_rates import FxRate
 from ..observable import Observable
 from ..settings import get_default_currency_code
 
@@ -12,6 +13,11 @@ class Asset(ABC):
     """
     _codes = Codes()
     yahoo_ticker = None
+
+    @classmethod
+    def reset(cls):
+        cls._codes.reset()
+        FxRate.reset()
 
     @classmethod
     def get_asset_for_code(cls, code):

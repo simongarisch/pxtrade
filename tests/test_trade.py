@@ -5,10 +5,9 @@ from pytrade.trade import Trade
 
 class TestTrade(object):
     def setup_method(self, *args):
+        Asset.reset()
         portfolio = self.portfolio = Portfolio("AAA")
-        stock = self.stock = Asset.get_asset_for_code("ZZB AU")
-        if stock is None:
-            stock = self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
+        self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
         self.trade = Trade(portfolio, "ZZB AU", 100)
 
     def teardown_method(self, *args):

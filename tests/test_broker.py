@@ -17,12 +17,9 @@ from pytrade.broker import (
 
 class TestBroker(object):
     def setup_method(self, *args):
+        Asset.reset()
         portfolio = self.portfolio = Portfolio("AUD")
-        aud = Asset.get_asset_for_code("AUD")
-        if aud is not None:
-            self.aud = aud
-        else:
-            aud = self.aud = Cash("AUD")
+        aud = self.aud = Cash("AUD")
         portfolio.transfer(aud, 1000)
         stock = self.stock = Stock("TEST AU", 2.50, currency_code="AUD")
         self.buy_trade = Trade(portfolio, stock, 100)
