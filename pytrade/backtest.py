@@ -1,3 +1,4 @@
+from copy import copy
 from pytrade import trade
 from pytrade import events
 from .events_queue import EventsQueue
@@ -58,11 +59,13 @@ class Backtest:
         if strategy_trades is None:
             return
         if isinstance(strategy_trades, trade.Trade):  # singular
+            # print(self._datetime, strategy_trades)
             self.load_event(events.TradeEvent(
                 self._datetime, strategy_trades
             ))
         else:
             for strategy_trade in strategy_trades:
+                # print(self._datetime, strategy_trade)
                 self.load_event(events.TradeEvent(
                     self._datetime, strategy_trade
                 ))
@@ -88,3 +91,7 @@ class Backtest:
     @property
     def num_events_loaded(self):
         return len(self._events_queue)
+
+    @property
+    def datetime(self):
+        return copy(self._datetime)
