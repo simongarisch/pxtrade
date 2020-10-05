@@ -14,6 +14,8 @@ class FillAtLast(AbstractExecution):
         asset = trade.asset
         portfolio = trade.portfolio
         units = trade.units
+        # if not trade.is_mock_trade:
+        #     print("Executing: ", trade)
         portfolio.trade(asset, units)
 
 

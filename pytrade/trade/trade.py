@@ -19,6 +19,8 @@ def _check_asset(asset: Union[Asset, str]):
 
 
 class Trade:
+    is_mock_trade = False
+
     def __init__(self, portfolio, asset, units):
         if not isinstance(portfolio, Portfolio):
             raise TypeError("Expecting a Portfolio instance.")
