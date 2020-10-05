@@ -155,6 +155,15 @@ class TestPortfolio(object):
         )
         assert round(portfolio.value, 1) == round(expected_value, 1)
 
+    def test_portfolio_trade_cash(self):
+        portfolio = self.portfolio
+        portfolio.transfer(self.aud, 1000)
+        assert portfolio.get_holding_units("USD") == 0
+        portfolio.trade(self.usd, 100)
+        # print(portfolio)
+        assert portfolio.get_holding_units("USD") == 100
+        assert int(portfolio.get_holding_units("AUD")) == int(1000 - 100 / 0.7)
+
     def test_default_currency_code(self):
         portfolio = Portfolio()
         default_code = get_default_currency_code()

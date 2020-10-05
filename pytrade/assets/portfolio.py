@@ -81,7 +81,15 @@ class Portfolio(Observer):
         if not isinstance(consideration, Real):
             raise TypeError("Expecting numeric consideration.")
 
-        cash = get_cash(asset.currency_code)
+        asset_currency_code = asset.currency_code
+        cash = get_cash(asset_currency_code)
+        if isinstance(asset, Cash):  # we are trading FX
+            base_code = self._base_currency_code
+            cash = get_cash(base_code)
+            consideration /= FxRate.get(base_code + asset_currency_code)
+
+        # print("asset: ", asset)
+        # print("cash: ", cash)
         self._holdings[asset] += units
         self._holdings[cash] += consideration
         self._check_observable(asset)
@@ -97,11 +105,11 @@ class Portfolio(Observer):
         if not is_equivalent_pair(fx_pair):  # e.g. don't observe 'AUDAUD'
             fx_observable = FxRate.get_observable_instance(fx_pair)
             fx_observable.add_observer(self)
-        if units != 0:
-            if isinstance(asset, VariablePriceAsset):
+        if isinstance(asset, VariablePriceAsset):
+            if units != 0:
                 asset.add_observer(self)
-        else:
-            asset.remove_observer(self)
+            else:
+                asset.remove_observer(self)
 
     def observable_update(self, observable):
         self._revalue()
