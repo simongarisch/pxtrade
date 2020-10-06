@@ -10,4 +10,4 @@ from pytrade import trade
 class Strategy(ABC):
     @abstractmethod
     def generate_trades(self) -> Union[None, trade.Trade, List[trade.Trade]]:
-        raise NotImplementedError
+        raise NotImplementedError()  # pragma: no cover
