@@ -15,6 +15,10 @@ class Asset(ABC):
     yahoo_ticker = None
 
     @classmethod
+    def get_instances(cls):
+        return cls._codes.get_instances()
+
+    @classmethod
     def reset(cls):
         cls._codes.reset()
         FxRate.reset()

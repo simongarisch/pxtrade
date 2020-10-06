@@ -63,6 +63,10 @@ class FxRate(Observable):
     def reset(cls):
         cls._instances = WeakValueDictionary()
 
+    @classmethod
+    def get_instances(cls):
+        return list(cls._instances.values())
+
     def __init__(self, pair, rate=None):
         super().__init__()
         pair = validate_pair(pair)

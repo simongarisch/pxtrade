@@ -26,9 +26,19 @@ def test_is_unique():
 
 
 def test_get_asset_for_code():
+    Asset.reset()
     stock1 = Stock("GOOG")
     stock2 = Asset.get_asset_for_code("GOOG")
     assert stock1 is stock2
+
+
+def test_get_instances():
+    stock1 = Stock("AAA")
+    stock2 = Stock("BBB")
+    assets = Asset.get_instances()
+    assert len(assets) == 2
+    assert stock1 in assets
+    assert stock2 in assets
 
 
 def test_local_value():

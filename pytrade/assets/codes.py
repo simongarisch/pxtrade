@@ -51,3 +51,6 @@ class Codes:
     def get_object_for_code(self, code):
         code = check_code(code)
         return self._codes.get(code)
+
+    def get_instances(self):
+        return list(self._codes.values())
