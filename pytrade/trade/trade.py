@@ -49,10 +49,6 @@ class Trade:
         return self._units
 
     @property
-    def status(self):
-        return self._status
-
-    @property
     def passed_compliance(self):
         return self._passed_compliance
 
