@@ -110,3 +110,7 @@ class Backtest:
     @property
     def datetime(self):
         return copy(self._datetime)
+
+    @property
+    def indicators(self):
+        return copy(self._indicators)

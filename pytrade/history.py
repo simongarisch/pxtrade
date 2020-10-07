@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from weakref import WeakSet
 import pandas as pd
+import pytrade
 from pytrade.assets import Asset, FxRate, Portfolio
 
 
@@ -49,7 +50,7 @@ class PortfolioVisitor(Visitor):
 class History:
     instances = WeakSet()
 
-    def __init__(self, portfolios):
+    def __init__(self, portfolios, *, backtest=None):
         self.instances.add(self)
         self._history = pd.DataFrame()
         self._asset_visitor = AssetVisitor()
@@ -66,7 +67,12 @@ class History:
             if not isinstance(portfolio, Portfolio):
                 raise TypeError("Expecting Portfolio instance.")
 
+        if backtest is not None:
+            if not isinstance(backtest, pytrade.backtest.Backtest):
+                raise TypeError("Expecting Backtest instance.")
+
         self._portfolios = portfolios
+        self._backtest = backtest
 
     def _get_visitor(self, instance):
         if isinstance(instance, Asset):
@@ -96,6 +102,11 @@ class History:
             for row in rows:
                 name, value = row
                 snapshot[name] = value
+
+        backtest = self._backtest
+        if backtest is not None:
+            for key, value in backtest.indicators.items():
+                snapshot[key] = value
 
         self._history = self._history.append(snapshot)
 

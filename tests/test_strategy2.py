@@ -36,7 +36,6 @@ def test_buy_spy_with_indicator():
     usd = Cash("USD")
     audusd = FxRate("AUDUSD")
     portfolio = Portfolio("AUD")
-    history = History(portfolio)
     starting_value = 1e5  # start with $100K AUD
     portfolio.transfer(aud, starting_value)
 
@@ -64,6 +63,10 @@ def test_buy_spy_with_indicator():
 
     # create your backtest instance
     backtest = Backtest(BuySpyWithIndicator())
+    history = History(
+        portfolios=portfolio,
+        backtest=backtest,
+    )
 
     # load price events from yahoo for spy, audusd, vix
     start_date = date(2020, 9, 1)
@@ -87,3 +90,4 @@ def test_buy_spy_with_indicator():
     assert int(df.at[start_date, "Portfolio"]) == int(starting_value)
     assert int(df.at[end_date, "Portfolio"]) == int(starting_value + 830)
     assert round(df.at[end_date, "AUDUSD"], 5) == 0.71665
+    assert round(df.at[pd.Timestamp(date(2020, 9, 14)), "^VIX"], 2) == 25.85
