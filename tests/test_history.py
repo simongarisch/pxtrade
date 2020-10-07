@@ -10,7 +10,7 @@ class TestHistory(object):
         reset()
         portfolio1 = self.portfolio1 = Portfolio("AUD", code="Portfolio")
         portfolio2 = self.portfolio2 = Portfolio("AUD", code="Benchmark")
-        portfolios = [portfolio1, portfolio2]
+        portfolios = self.portfolios = [portfolio1, portfolio2]
         cash = self.cash = Cash("AUD")
         stock = self.stock = Stock("ZZB", currency_code="AUD")
         stock.price = 0
@@ -23,6 +23,7 @@ class TestHistory(object):
     def teardown_method(self):
         del self.portfolio1
         del self.portfolio2
+        del self.portfolios
         del self.cash
         del self.stock
         del self.history
@@ -72,6 +73,10 @@ class TestHistory(object):
             History(None)
         with pytest.raises(TypeError):
             History([None])
+
+        # checks backtest instance
+        with pytest.raises(TypeError):
+            History(self.portfolios, backtest=123)
 
         # # only specific objects supported for history
         with pytest.raises(NotImplementedError):
