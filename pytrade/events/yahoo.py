@@ -81,7 +81,7 @@ class Loader(ABC):
                 instance, event_datetime, close, backtest=backtest
             )
             if event_datetime < start_date or event_datetime > end_date:
-                continue
+                continue  # pragma: no cover just in case yahoo has bad data
             backtest.load_event(event)
 
 
