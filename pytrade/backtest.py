@@ -3,10 +3,16 @@ from pytrade import trade
 from pytrade import events
 from .events_queue import EventsQueue
 from .strategy import Strategy
+from .history import History
 
 
 class Backtest:
-    def __init__(self, strategy=None):
+    def __init__(
+        self,
+        strategy=None,
+        *,
+        record_history=True,
+    ):
         self._indicators = dict()
         self._events_queue = EventsQueue()
         self._datetime = None
@@ -14,6 +20,7 @@ class Backtest:
             if not isinstance(strategy, Strategy):
                 raise TypeError("Expecting Strategy instance.")
         self._strategy = strategy
+        self._record_history = record_history
 
     def get_indicator(self, indicator_name):
         return self._indicators.get(indicator_name)
@@ -78,6 +85,7 @@ class Backtest:
         queue = self._events_queue
         process_next_event = self._process_next_event
         process_events_for_current_datetime = self._process_events_for_current_datetime  # noqa: E501
+        take_history_snapshot = self._take_history_snapshot
         while True:
             process_next_event()  # primes self._datetime
             process_events_for_current_datetime()
@@ -85,8 +93,15 @@ class Backtest:
             # time stamp we can run our strategy
             self._run_strategy()
             process_events_for_current_datetime()
+            take_history_snapshot()
             if queue.empty():
                 break
+
+    def _take_history_snapshot(self):
+        if not self._record_history:
+            return
+        for record in History.instances:
+            record.take_snapshot(self._datetime)
 
     @property
     def num_events_loaded(self):
