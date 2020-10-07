@@ -8,7 +8,7 @@ from collections import defaultdict
 from numbers import Real
 from .asset import Asset, VariablePriceAsset
 from .cash import Cash, get_cash
-from .codes import check_code, check_currency_code
+from .codes import Codes, check_code, check_currency_code
 from .fx_rates import FxRate, is_equivalent_pair
 from ..observable import Observer
 from ..settings import get_default_currency_code
@@ -18,11 +18,22 @@ from ..broker import Broker
 
 class Portfolio(Observer):
     """ A portfolio will observe the assets it holds. """
-    def __init__(self, base_currency_code=None):
+    _codes = Codes()
+
+    @classmethod
+    def reset(cls):
+        cls._codes.reset()
+
+    def __init__(self, base_currency_code=None, *, code=None):
         super().__init__()
         if base_currency_code is None:
             base_currency_code = get_default_currency_code()
+        if code is None:
+            code = "Portfolio"
+        # we can't have more than one portfolio with a code of None
+        self._codes.register(code, self)
         self._base_currency_code = check_currency_code(base_currency_code)
+        self._code = code
         self._holdings = defaultdict(lambda: 0)
         self._value = 0
         self._compliance = Compliance()  # empty by default
@@ -32,6 +43,10 @@ class Portfolio(Observer):
     def value(self):
         """ value is read only after init. """
         return self._value
+
+    @property
+    def code(self):
+        return self._code
 
     @property
     def base_currency_code(self):

@@ -36,6 +36,7 @@ def test_backtest_num_events_loaded():
 
 
 def test_backtest_strategy():
+    Portfolio.reset()
     with pytest.raises(TypeError):
         Backtest(strategy="Strategy")
 
@@ -60,6 +61,7 @@ def test_backtest_strategy():
 
 
 def test_backtest_strategy_with_compliance():
+    Portfolio.reset()
     portfolio = Portfolio("AUD")
     stock = Stock("JJJ AU", 2.50, currency_code="AUD")
     events = [

@@ -1,11 +1,11 @@
 import pytest
-from pytrade.assets import Asset, Stock, Portfolio
+from pytrade.assets import reset, Stock, Portfolio
 from pytrade.trade import Trade
 
 
 class TestTrade(object):
     def setup_method(self, *args):
-        Asset.reset()
+        reset()
         portfolio = self.portfolio = Portfolio("AAA")
         self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
         self.trade = Trade(portfolio, "ZZB AU", 100)

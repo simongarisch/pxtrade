@@ -1,10 +1,9 @@
 import pytest
-from pytrade.assets.asset import Asset
-from pytrade.assets.cash import Cash
+from pytrade.assets import reset, Asset, Cash
 
 
 def test_cash_code():
-    Asset.reset()
+    reset()
     aud = Cash("AUD")
     assert isinstance(aud, Asset)
     assert aud.currency_code == "AUD"
@@ -13,7 +12,7 @@ def test_cash_code():
 
 
 def test_cannot_change_price():
-    Asset.reset()
+    reset()
     aud = Cash("AUD")
     with pytest.raises(AttributeError):
         aud.price = 2

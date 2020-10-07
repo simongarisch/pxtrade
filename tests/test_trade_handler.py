@@ -1,5 +1,5 @@
 import pytest
-from pytrade.assets import Asset, Stock, Portfolio
+from pytrade.assets import reset, Stock, Portfolio
 from pytrade.trade import Trade, trade_pipeline
 from pytrade.trade.trade_pipeline import Handler
 
@@ -13,7 +13,7 @@ class CustomHandler(Handler):
 
 class TestTrade(object):
     def setup_method(self, *args):
-        Asset.reset()
+        reset()
         portfolio = self.portfolio = Portfolio("AUD")
         self.stock = Stock("ZZB AU", 2.50, currency_code="AUD")
         self.trade = Trade(portfolio, "ZZB AU", 100)

@@ -1,5 +1,5 @@
 import pytest
-from pytrade.assets import FxRate, Asset, Stock, Cash, Portfolio
+from pytrade.assets import reset, FxRate, Stock, Cash, Portfolio
 from pytrade.compliance import Compliance
 from pytrade.broker import Broker
 from pytrade.settings import get_default_currency_code
@@ -8,7 +8,7 @@ from pytrade.settings import get_default_currency_code
 class TestPortfolio(object):
 
     def setup_method(self, *args):
-        Asset.reset()
+        reset()
         self.portfolio = Portfolio("AUD")
         self.aud = Cash("AUD")
         self.usd = Cash("USD")
@@ -31,9 +31,9 @@ class TestPortfolio(object):
     def test_base_currency(self):
         portfolio = self.portfolio
         with pytest.raises(TypeError):
-            Portfolio(123)
+            Portfolio(123, code="ASD")
         with pytest.raises(ValueError):
-            Portfolio("AUDX")
+            Portfolio("AUDX", code="IOP")
         assert portfolio.base_currency_code == "AUD"
         with pytest.raises(AttributeError):
             # base currency code is read only after init
@@ -152,6 +152,7 @@ class TestPortfolio(object):
         assert int(portfolio.get_holding_units("AUD")) == int(1000 - 100 / 0.7)
 
     def test_default_currency_code(self):
+        reset()
         portfolio = Portfolio()
         default_code = get_default_currency_code()
         assert portfolio.base_currency_code == default_code
@@ -202,6 +203,7 @@ class TestPortfolio(object):
         assert parts[2].strip() == part2
 
     def test_portfolio_weight(self):
+        Portfolio.reset()
         portfolio = Portfolio("USD")
         stock1 = Stock("ABC US", 2.00, currency_code="USD")
         stock2 = Stock("DEF US", 2.00, currency_code="USD")
@@ -218,6 +220,7 @@ class TestPortfolio(object):
         assert portfolio.get_holding_weight("NOT A CODE") == 0
 
     def test_portfolio_compliance(self):
+        Portfolio.reset()
         portfolio = Portfolio("USD")
         compliance = portfolio.compliance
         assert isinstance(compliance, Compliance)
@@ -228,6 +231,7 @@ class TestPortfolio(object):
             portfolio.compliance = None
 
     def test_portfolio_broker(self):
+        Portfolio.reset()
         portfolio = Portfolio("USD")
         broker = portfolio.broker
         assert isinstance(broker, Broker)

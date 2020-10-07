@@ -1,6 +1,6 @@
 import pytest
 from pytrade.settings import get_default_currency_code
-from pytrade.assets import Asset, Stock
+from pytrade.assets import reset, Asset, Stock
 from pytrade.observable import Observable
 
 
@@ -26,7 +26,7 @@ def test_is_unique():
 
 
 def test_get_asset_for_code():
-    Asset.reset()
+    reset()
     stock1 = Stock("GOOG")
     stock2 = Asset.get_asset_for_code("GOOG")
     assert stock1 is stock2

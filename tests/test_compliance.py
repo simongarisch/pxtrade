@@ -1,5 +1,5 @@
 import pytest
-from pytrade.assets import Stock, Portfolio
+from pytrade.assets import reset, Stock, Portfolio
 from pytrade.compliance import (
     Compliance,
     UnitLimit,
@@ -9,6 +9,7 @@ from pytrade.compliance import (
 
 class TestCompliance(object):
     def setup_method(self, *args):
+        reset()
         stock1 = self.stock1 = Stock("BBB US", 2.00, currency_code="USD")
         stock2 = self.stock2 = Stock("CCC US", 2.00, currency_code="USD")
         portfolio = self.portfolio = Portfolio("USD")

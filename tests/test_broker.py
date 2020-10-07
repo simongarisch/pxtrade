@@ -1,7 +1,7 @@
 import pytest
 from pytrade import Trade, Broker
 from pytrade.assets import (
-    Asset,
+    reset,
     Stock,
     Cash,
     FxRate,
@@ -17,7 +17,7 @@ from pytrade.broker import (
 
 class TestBroker(object):
     def setup_method(self, *args):
-        Asset.reset()
+        reset()
         portfolio = self.portfolio = Portfolio("AUD")
         aud = self.aud = Cash("AUD")
         portfolio.transfer(aud, 1000)

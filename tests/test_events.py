@@ -84,6 +84,7 @@ def test_fx_rate_event():
 
 
 def test_proposed_trade_event():
+    Portfolio.reset()
     portfolio = Portfolio("USD")
     goog = Stock("GOOG US", 1500, currency_code="USD")
     dt = datetime(2020, 9, 1, 12, 30)

@@ -1,8 +1,8 @@
-from pytrade.assets import Asset, Cash
+from pytrade.assets import reset, Cash
 
 
 def test_cash():
-    Asset.reset()
+    reset()
     aud = Cash("AUD")
     assert aud.code == "AUD"
     assert aud.currency_code == "AUD"
