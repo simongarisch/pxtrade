@@ -18,22 +18,25 @@ Points to note:
 -  PNL will be $8.30 (= 470.30 - 462.00) for each of 100 shares purchased.
 """
 from datetime import date
+import pandas as pd
 from pytrade import Trade
-from pytrade.assets import Asset, Stock, Cash, FxRate, Portfolio
+from pytrade.assets import reset, Stock, Cash, FxRate, Portfolio
 from pytrade.backtest import Backtest
 from pytrade.strategy import Strategy
 from pytrade.events.yahoo import load_yahoo_prices
 from pytrade.compliance import Compliance, UnitLimit
+from pytrade.history import History
 
 
 def test_buy_spy_with_indicator():
     # create your stock and portfolio
-    Asset.reset()
+    reset()
     spy = Stock("SPY", currency_code="USD")
     aud = Cash("AUD")
     usd = Cash("USD")
     audusd = FxRate("AUDUSD")
     portfolio = Portfolio("AUD")
+    history = History(portfolio)
     starting_value = 1e5  # start with $100K AUD
     portfolio.transfer(aud, starting_value)
 
@@ -74,6 +77,13 @@ def test_buy_spy_with_indicator():
 
     # run the backtest and check pnl
     backtest.run()
-    print(portfolio)
-    print(audusd.rate)
+    # print(portfolio)
+    # print(audusd.rate)
     assert int(portfolio.value) == int(starting_value + 830)
+
+    df = history.get()
+    start_date = pd.Timestamp(start_date)
+    end_date = pd.Timestamp(end_date)
+    assert int(df.at[start_date, "Portfolio"]) == int(starting_value)
+    assert int(df.at[end_date, "Portfolio"]) == int(starting_value + 830)
+    assert round(df.at[end_date, "AUDUSD"], 5) == 0.71665

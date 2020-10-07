@@ -17,15 +17,16 @@ Total portfolio value will be starting value + pnl.
 """
 from datetime import date
 from pytrade import Trade
-from pytrade.assets import Asset, Cash, FxRate, Portfolio
+from pytrade.assets import reset, Cash, FxRate, Portfolio
 from pytrade.backtest import Backtest
 from pytrade.strategy import Strategy
 from pytrade.events.yahoo import load_yahoo_prices
 from pytrade.compliance import Compliance, UnitLimit
+from pytrade.history import History
 
 
 def test_audusd_strategy():
-    Asset.reset()
+    reset()
     portfolio = Portfolio("USD")
     aud = Cash("AUD")
     usd = Cash("USD")
@@ -54,7 +55,8 @@ def test_audusd_strategy():
                     print("Selling at", audusd_rate)
                     return Trade(portfolio, aud, -aud_holding)
 
-    backtest = Backtest(AUDStrategy())
+    history = History(portfolio)
+    backtest = Backtest(AUDStrategy(), record_history=False)
     start_date = date(2020, 1, 1)
     end_date = date(2020, 9, 30)
     load_yahoo_prices(
@@ -70,3 +72,6 @@ def test_audusd_strategy():
     # df[df["Adj Close"] <= 0.6]
     # df[df["Adj Close"] >= 0.7]
     assert int(portfolio.value) == int(amount + 10102)
+
+    df = history.get()
+    assert len(df.index) == 0  # no history is recorded

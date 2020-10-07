@@ -7,19 +7,22 @@ The strategy is to:
 PNL = (337.04 - 351.19) * 100 = -USD 1,415
 """
 from datetime import date
+import pandas as pd
 from pytrade import Trade
-from pytrade.assets import Asset, Stock, Portfolio
+from pytrade.assets import reset, Stock, Portfolio
 from pytrade.backtest import Backtest
 from pytrade.strategy import Strategy
 from pytrade.events.yahoo import load_yahoo_prices
 from pytrade.compliance import Compliance, UnitLimit
+from pytrade.history import History
 
 
 def test_buy_and_hold():
     # create your stock and portfolio
-    Asset.reset()
+    reset()
     spy = Stock("SPY", currency_code="USD")
     portfolio = Portfolio("USD")
+    history = History(portfolio)
 
     # impose a compliance rule so we are unable to
     # hold more than 100 shares.
@@ -47,3 +50,21 @@ def test_buy_and_hold():
     # run the backtest and check pnl
     backtest.run()
     assert int(portfolio.value) == -1415
+    df = history.get()
+
+    start_date = pd.Timestamp(start_date)
+    end_date = pd.Timestamp(end_date)
+    # we hold a spy position of 100 shares from start to finish
+    assert df.at[start_date, "Portfolio_SPY"] == 100
+    assert df.at[end_date, "Portfolio_SPY"] == 100
+
+    # a short position is held in USD (for the cost of stock purchase)
+    assert int(df.at[start_date, "Portfolio_USD"]) == -35119
+
+    # check on the start and ending prices for spy
+    assert round(df.at[start_date, "SPY"], 2) == 351.19
+    assert round(df.at[end_date, "SPY"], 2) == 337.04
+
+    # and the portfolio value
+    assert int(df.at[start_date, "Portfolio"]) == 0
+    assert int(df.at[end_date, "Portfolio"]) == -1415
