@@ -7,6 +7,7 @@ setup(
     install_requires=[
         "pandas>=1.1.1",
         "pandas_datareader>=0.9.0",
+        "ipython==7.15.0",
         "cufflinks>=0.17.3",
     ],
 
