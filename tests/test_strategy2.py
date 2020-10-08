@@ -98,11 +98,20 @@ def test_buy_spy_with_indicator():
     # print(audusd.rate)
     print(backtest.datetime)
     print(df)
-    assert int(portfolio.value) == int(starting_value + 830)
+
+    # Note that when running on windows the last FX rate we get from yahoo
+    # is on the 30 Sep AUDUSD = 7.716651. However, running on linux we get
+    # a price from 1 Oct of AUDUSD = 0.718288.
+    # This looks to be an issue with the yahoo api, but it has implications
+    # for our assertions around portfolio value.
+    starting_aud_price = 462  # this has not changed
+    ending_aud_price = 337.04 / audusd.rate
+    expected_pnl = (ending_aud_price - starting_aud_price) * 100
+    expected_value = starting_value + expected_pnl
+    assert round(portfolio.value, -1) == round(expected_value, -1)
 
     start_date = pd.Timestamp(start_date)
     end_date = pd.Timestamp(end_date)
     assert int(df.at[start_date, "Portfolio"]) == int(starting_value)
-    assert int(df.at[end_date, "Portfolio"]) == int(starting_value + 830)
-    assert round(df.at[end_date, "AUDUSD"], 5) == 0.71665
+    assert round(df.at[end_date, "Portfolio"], -1) == round(expected_value, -1)
     assert round(df.at[pd.Timestamp(date(2020, 9, 14)), "^VIX"], 2) == 25.85
