@@ -6,9 +6,7 @@ python:
   - "3.8"
 
 install:
-  - pip install -U pip
-  - python setup.py install              # install your package
-  - pip install -r requirements-dev.txt  # install requirements
+  - pip install -r requirements-dev.txt
   - pip install coveralls
   
 script:
