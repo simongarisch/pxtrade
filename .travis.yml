@@ -7,12 +7,12 @@ python:
 
 install:
   - pip install -r requirements-dev.txt
+  - pip install pytest-cov
   - pip install coveralls
   
 script:
-  - python -m pytest
+  - python -m pytest --cov=pytrade/
   - flake8 pytrade
-  - coverage run -m pytest
 
 after_success:
   - coveralls
