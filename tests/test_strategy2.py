@@ -93,11 +93,13 @@ def test_buy_spy_with_indicator():
 
     # run the backtest and check pnl
     backtest.run()
+    df = history.get()
     # print(portfolio)
     # print(audusd.rate)
+    print(backtest.datetime)
+    print(df)
     assert int(portfolio.value) == int(starting_value + 830)
 
-    df = history.get()
     start_date = pd.Timestamp(start_date)
     end_date = pd.Timestamp(end_date)
     assert int(df.at[start_date, "Portfolio"]) == int(starting_value)
