@@ -48,6 +48,17 @@ def test_buy_spy_with_indicator():
     # define a strategy to buy 100 shares of SPY
     # if we are short USD then also fund this shortfall with AUD
     class BuySpyWithIndicator(Strategy):
+        def show(self, trades):
+            if len(trades) == 0:
+                return
+            print(backtest.datetime)
+            print("^VIX: ", backtest.get_indicator("^VIX"))
+            print("AUDUSD: ", audusd.rate)
+            print("SPY: ", spy.price)
+            for trade in trades:
+                print(trade)
+            print("-------")
+
         def generate_trades(self):
             trades = list()
             usd_holding = portfolio.get_holding_units("USD")
@@ -56,9 +67,11 @@ def test_buy_spy_with_indicator():
 
             if backtest.get_indicator("^VIX") >= 26:
                 # don't buy any spy, just fund usd (if required)
+                self.show(trades)
                 return trades
 
             trades.append(Trade(portfolio, spy, 100))
+            self.show(trades)
             return trades
 
     # create your backtest instance
