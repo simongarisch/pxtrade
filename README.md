@@ -1,4 +1,4 @@
 # pytrade
 
 [![Build Status](https://travis-ci.org/simongarisch/pytrade.svg?branch=master)](https://travis-ci.org/simongarisch/pytrade)
-[![Coverage Status](https://coveralls.io/repos/github/simongarisch/pytrade/badge.png?branch=master)](https://coveralls.io/github/simongarisch/pytrade?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/simongarisch/pytrade/badge.svg)](https://coveralls.io/github/simongarisch/pytrade?branch=master)
