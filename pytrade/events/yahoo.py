@@ -12,7 +12,7 @@ from pytrade.events import (
 from pandas_datareader import data as web
 
 
-def _fetch_yahoo(ticker, start_date, end_date):
+def fetch_yahoo(ticker, start_date, end_date):
     df = web.DataReader(ticker, "yahoo", start_date, end_date)
     df.columns = [clean_column_name(column) for column in df.columns]
     return df
@@ -73,7 +73,7 @@ class Loader(ABC):
         start_date = self._start_date
         end_date = self._end_date
         backtest = self._backtest
-        df = _fetch_yahoo(ticker, start_date, end_date)
+        df = fetch_yahoo(ticker, start_date, end_date)
         EventClass = events_map[self.__class__]
         for event_datetime, row in df.iterrows():
             close = float(row["adj_close"])
