@@ -108,12 +108,14 @@ class FxRate(Observable):
 
         fx = cls._instances.get(pair)
         if fx is not None:
-            return fx.rate
+            if fx.rate is not None:
+                return fx.rate
 
         inverse_pair = get_inverse_pair(pair)
         fx = cls._instances.get(inverse_pair)
         if fx is not None:
-            return 1 / fx.rate
+            if fx.rate is not None:
+                return 1 / fx.rate
 
         raise ValueError("%s rate not available" % pair)
 
