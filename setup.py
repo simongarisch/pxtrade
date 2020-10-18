@@ -12,7 +12,7 @@ setup(
     ],
 
     author="Simon Garisch",
-    author_email="gatman946 at gmail.com",
+    author_email="gatman946@gmail.com",
 
     description="A multi currency, event driven backtester written in Python.",
     long_description=open("README.md").read(),
