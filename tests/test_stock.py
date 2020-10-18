@@ -1,4 +1,4 @@
-from pytrade.assets import Stock
+from pytrading.assets import Stock
 
 
 def test_stock_str():

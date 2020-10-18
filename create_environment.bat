@@ -7,4 +7,4 @@ pip install -r requirements-dev.txt
 
 REM CREATE A UNIQUE JUPYTER KERNEL FOR THIS PROJECT
 pip install ipykernel
-ipython kernel install --user --name=pytrade
+ipython kernel install --user --name=pytrading

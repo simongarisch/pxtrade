@@ -2,7 +2,7 @@ import pytest
 from datetime import datetime
 import pandas as pd
 import numpy as np
-from pytrade.util import (
+from pytrading.util import (
     clean_string,
     check_positive_numeric,
     to_datetime,

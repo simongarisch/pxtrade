@@ -1,5 +1,5 @@
 from .base import AbstractEvent
-from pytrade.trade import Trade, trade_pipeline
+from pytrading.trade import Trade, trade_pipeline
 
 
 class TradeEvent(AbstractEvent):

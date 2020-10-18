@@ -1,7 +1,7 @@
 import pytest
-from pytrade.assets import reset, Stock, Portfolio
-from pytrade.trade import Trade, trade_pipeline
-from pytrade.trade.trade_pipeline import Handler
+from pytrading.assets import reset, Stock, Portfolio
+from pytrading.trade import Trade, trade_pipeline
+from pytrading.trade.trade_pipeline import Handler
 
 
 class CustomHandler(Handler):

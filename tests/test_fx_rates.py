@@ -1,5 +1,5 @@
 import pytest
-from pytrade.assets.fx_rates import FxRate, validate_pair
+from pytrading.assets.fx_rates import FxRate, validate_pair
 
 
 def test_validate_pair():

@@ -1,4 +1,4 @@
-from pytrade.assets import reset, Cash
+from pytrading.assets import reset, Cash
 
 
 def test_cash():

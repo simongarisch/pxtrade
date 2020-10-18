@@ -2,7 +2,7 @@
 A broker will execute some trade for a fee.
 Charges and execution are organised as strategy patterns.
 """
-import pytrade
+import pytrading
 from .charges import NoCharges
 from .execution import FillAtLast
 
@@ -19,7 +19,7 @@ class Broker:
 
     def execute(self, trade):
         """ Apply some charge and execution strategy to the trade. """
-        if not isinstance(trade, pytrade.Trade):
+        if not isinstance(trade, pytrading.Trade):
             raise TypeError("Expecting Trade instance.")
         self._charges_strategy.charge(trade)
         self._execution_strategy.execute(trade)

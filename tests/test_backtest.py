@@ -1,11 +1,11 @@
 from datetime import datetime
 import pytest
-import pytrade
-from pytrade.assets import Stock, Portfolio
-from pytrade.backtest import Backtest
-from pytrade.strategy import Strategy
-from pytrade.events import AssetPriceEvent, IndicatorEvent
-from pytrade.compliance import Compliance, UnitLimit
+import pytrading
+from pytrading.assets import Stock, Portfolio
+from pytrading.backtest import Backtest
+from pytrading.strategy import Strategy
+from pytrading.events import AssetPriceEvent, IndicatorEvent
+from pytrading.compliance import Compliance, UnitLimit
 
 
 def test_backtest_indicator():
@@ -51,7 +51,7 @@ def test_backtest_strategy():
     class BasicStrategy(Strategy):
         def generate_trades(self):
             # always buy 1 share of 'HHH AU'
-            return pytrade.Trade(portfolio, stock, 1)
+            return pytrading.Trade(portfolio, stock, 1)
 
     backtest = Backtest(BasicStrategy())
     [backtest.load_event(event) for event in events]
@@ -73,7 +73,7 @@ def test_backtest_strategy_with_compliance():
     class BasicStrategy(Strategy):
         def generate_trades(self):
             # always buy 1 share of 'JJJ AU'
-            return pytrade.Trade(portfolio, stock, 1)
+            return pytrading.Trade(portfolio, stock, 1)
 
     compliance = Compliance()
     compliance.add_rule(UnitLimit(stock, 2))

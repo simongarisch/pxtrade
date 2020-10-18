@@ -1,13 +1,13 @@
 import pytest
-from pytrade import Trade, Broker
-from pytrade.assets import (
+from pytrading import Trade, Broker
+from pytrading.assets import (
     reset,
     Stock,
     Cash,
     FxRate,
     Portfolio,
 )
-from pytrade.broker import (
+from pytrading.broker import (
     AbstractExecution,
     AbstractCharges,
     FillAtLastWithSlippage,

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="pytrade",
+    name="pytrading",
     version="0.2.0",
     install_requires=[
         "pandas>=1.1.1",

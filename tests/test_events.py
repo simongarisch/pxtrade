@@ -1,8 +1,8 @@
 import pytest
 from datetime import datetime
-from pytrade.assets import Stock, Portfolio, FxRate
-from pytrade.trade import Trade
-from pytrade.events import (
+from pytrading.assets import Stock, Portfolio, FxRate
+from pytrading.trade import Trade
+from pytrading.events import (
     AssetPriceEvent,
     FxRateEvent,
     TradeEvent,

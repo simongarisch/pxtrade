@@ -1,8 +1,8 @@
 import pytest
-from pytrade.assets import reset, FxRate, Stock, Cash, Portfolio
-from pytrade.compliance import Compliance
-from pytrade.broker import Broker
-from pytrade.settings import get_default_currency_code
+from pytrading.assets import reset, FxRate, Stock, Cash, Portfolio
+from pytrading.compliance import Compliance
+from pytrading.broker import Broker
+from pytrading.settings import get_default_currency_code
 
 
 class TestPortfolio(object):

@@ -1,8 +1,8 @@
 from datetime import datetime
 import pytest
-from pytrade import EventsQueue
-from pytrade.assets import Stock
-from pytrade.events import AssetPriceEvent
+from pytrading import EventsQueue
+from pytrading.assets import Stock
+from pytrading.events import AssetPriceEvent
 
 
 def test_queue_order():

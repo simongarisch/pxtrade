@@ -1,4 +1,4 @@
-from pytrade.observable import Observable
+from pytrading.observable import Observable
 
 
 class Something(Observable):

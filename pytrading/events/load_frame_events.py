@@ -1,8 +1,8 @@
 import inspect
 import pandas as pd
 from .base import AbstractEvent
-import pytrade
-from pytrade.util import to_datetime
+import pytrading
+from pytrading.util import to_datetime
 
 
 def load_frame_events(
@@ -20,7 +20,7 @@ def load_frame_events(
         raise TypeError("Expecting pd.DataFrame instance.")
     if not isinstance(column, str):
         raise TypeError("Expecting string.")
-    if not isinstance(backtest, pytrade.backtest.Backtest):
+    if not isinstance(backtest, pytrading.backtest.Backtest):
         raise TypeError("Expecting Backtest instance.")
     if not inspect.isclass(event_class):
         raise TypeError("Expecting Event class.")
