@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pytrade",
-    version="0.1.0",
+    version="0.2.0",
     install_requires=[
         "pandas>=1.1.1",
         "pandas_datareader>=0.9.0",
