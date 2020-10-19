@@ -13,6 +13,7 @@ install:
 script:
   - python -m pytest --cov=pxtrade/
   - flake8 pxtrade
+  - black --check pxtrade
 
 after_success:
   - coveralls
