@@ -1,6 +1,6 @@
 from configparser import ConfigParser
-from pytrading.assets.codes import check_currency_code
-from pytrading.settings import (
+from pxtrade.assets.codes import check_currency_code
+from pxtrade.settings import (
     config,
     set_default_currency_code,
     get_default_currency_code,

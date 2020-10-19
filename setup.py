@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="pytrading",
+    name="pxtrade",
     version="0.2.0",
     install_requires=[
         "pandas>=1.1.1",
@@ -13,7 +13,7 @@ setup(
 
     author="Simon Garisch",
     author_email="gatman946@gmail.com",
-    url="https://github.com/simongarisch/pytrading",
+    url="https://github.com/simongarisch/pxtrade",
 
     description="A multi currency, event driven backtester written in Python.",
     long_description=open("README.md").read(),

@@ -1,6 +1,6 @@
 import pytest
-from pytrading.assets import reset, Stock, Portfolio
-from pytrading.compliance import (
+from pxtrade.assets import reset, Stock, Portfolio
+from pxtrade.compliance import (
     Compliance,
     UnitLimit,
     WeightLimit,

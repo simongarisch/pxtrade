@@ -4,7 +4,7 @@ for execution. Trade creation -> run compliance -> execution.
 """
 from copy import deepcopy
 from abc import ABC, abstractmethod
-from pytrading.trade import Trade
+from pxtrade.trade import Trade
 
 
 class Handler(ABC):

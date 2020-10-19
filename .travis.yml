@@ -11,8 +11,8 @@ install:
   - pip install coveralls
   
 script:
-  - python -m pytest --cov=pytrading/
-  - flake8 pytrading
+  - python -m pytest --cov=pxtrade/
+  - flake8 pxtrade
 
 after_success:
   - coveralls

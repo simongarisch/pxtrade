@@ -4,7 +4,7 @@ Each strategy will return trades to be executed.
 """
 from abc import ABC, abstractmethod
 from typing import Union, List
-from pytrading import trade
+from pxtrade import trade
 
 
 class Strategy(ABC):

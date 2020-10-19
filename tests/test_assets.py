@@ -1,7 +1,7 @@
 import pytest
-from pytrading.settings import get_default_currency_code
-from pytrading.assets import reset, Asset, Stock
-from pytrading.observable import Observable
+from pxtrade.settings import get_default_currency_code
+from pxtrade.assets import reset, Asset, Stock
+from pxtrade.observable import Observable
 
 
 def test_is_observable():

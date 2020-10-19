@@ -1,8 +1,8 @@
 import pytest
-from pytrading.assets import reset, Stock
-from pytrading.strategy import Strategy
-from pytrading.backtest import Backtest
-from pytrading.events.yahoo import (
+from pxtrade.assets import reset, Stock
+from pxtrade.strategy import Strategy
+from pxtrade.backtest import Backtest
+from pxtrade.events.yahoo import (
     load_yahoo_prices,
     YahooAssetLoader,
 )

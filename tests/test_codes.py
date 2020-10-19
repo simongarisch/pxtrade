@@ -1,5 +1,5 @@
 import pytest
-from pytrading.assets.codes import (
+from pxtrade.assets.codes import (
     check_code,
     check_currency_code,
     Codes,

@@ -19,13 +19,13 @@ Points to note:
 """
 from datetime import date
 import pandas as pd
-from pytrading import Trade
-from pytrading.assets import reset, Stock, Cash, FxRate, Portfolio
-from pytrading.backtest import Backtest
-from pytrading.strategy import Strategy
-from pytrading.events.yahoo import load_yahoo_prices
-from pytrading.compliance import Compliance, UnitLimit
-from pytrading.history import History
+from pxtrade import Trade
+from pxtrade.assets import reset, Stock, Cash, FxRate, Portfolio
+from pxtrade.backtest import Backtest
+from pxtrade.strategy import Strategy
+from pxtrade.events.yahoo import load_yahoo_prices
+from pxtrade.compliance import Compliance, UnitLimit
+from pxtrade.history import History
 
 
 def test_buy_spy_with_indicator():

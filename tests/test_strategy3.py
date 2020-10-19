@@ -16,13 +16,13 @@ If we bought and sold 100K AUD at these rates then:
 Total portfolio value will be starting value + pnl.
 """
 from datetime import date
-from pytrading import Trade
-from pytrading.assets import reset, Cash, FxRate, Portfolio
-from pytrading.backtest import Backtest
-from pytrading.strategy import Strategy
-from pytrading.events.yahoo import load_yahoo_prices
-from pytrading.compliance import Compliance, UnitLimit
-from pytrading.history import History
+from pxtrade import Trade
+from pxtrade.assets import reset, Cash, FxRate, Portfolio
+from pxtrade.backtest import Backtest
+from pxtrade.strategy import Strategy
+from pxtrade.events.yahoo import load_yahoo_prices
+from pxtrade.compliance import Compliance, UnitLimit
+from pxtrade.history import History
 
 
 def test_audusd_strategy():

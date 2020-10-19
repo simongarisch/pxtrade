@@ -1,26 +1,26 @@
-## pytrading
-[![Build Status](https://travis-ci.org/simongarisch/pytrading.svg?branch=master)](https://travis-ci.org/simongarisch/pytrading)
-[![Coverage Status](https://coveralls.io/repos/github/simongarisch/pytrading/badge.svg)](https://coveralls.io/github/simongarisch/pytrading?branch=master)
+## pxtrade
+[![Build Status](https://travis-ci.org/simongarisch/pxtrade.svg?branch=master)](https://travis-ci.org/simongarisch/pxtrade)
+[![Coverage Status](https://coveralls.io/repos/github/simongarisch/pxtrade/badge.svg)](https://coveralls.io/github/simongarisch/pxtrade?branch=master)
 
 A multi currency, event driven backtester written in Python.
 
 
 ### Installation
 ```bash
-pip install pytrading
+pip install pxtrade
 ```
 
 ### Examples
-[Notebooks](https://github.com/simongarisch/pytrading/tree/master/notes) are available to cover the main concepts and examples.
--  [equities buy and hold](https://github.com/simongarisch/pytrading/blob/master/notes/06%20Example%20-%20Buy%20And%20Hold.ipynb)
--  [fx trading](https://github.com/simongarisch/pytrading/blob/master/notes/08%20Example%20-%20FX.ipynb)
--  [bitcoin](https://github.com/simongarisch/pytrading/blob/master/notes/09%20Example%20-%20Bitcoin.ipynb)
--  [Intraday trading](https://github.com/simongarisch/pytrading/blob/master/notes/11%20Example%20-%20FX%20Intraday%20with%20Benchmark.ipynb)
+[Notebooks](https://github.com/simongarisch/pxtrade/tree/master/notes) are available to cover the main concepts and examples.
+-  [equities buy and hold](https://github.com/simongarisch/pxtrade/blob/master/notes/06%20Example%20-%20Buy%20And%20Hold.ipynb)
+-  [fx trading](https://github.com/simongarisch/pxtrade/blob/master/notes/08%20Example%20-%20FX.ipynb)
+-  [bitcoin](https://github.com/simongarisch/pxtrade/blob/master/notes/09%20Example%20-%20Bitcoin.ipynb)
+-  [Intraday trading](https://github.com/simongarisch/pxtrade/blob/master/notes/11%20Example%20-%20FX%20Intraday%20with%20Benchmark.ipynb)
 
 ### Assets and Portfolios
 Before we can run a backtest we need to define the assets and portfolios involved.
 ```python
-from pytrading.assets import reset, Cash, Stock, FxRate, Portfolio
+from pxtrade.assets import reset, Cash, Stock, FxRate, Portfolio
 
 
 reset()
@@ -55,10 +55,10 @@ portfolio.value
 
 
 ### Imposing portfolio constraints through compliance
-Ideally there will be risk limits in place when running a backtest. Some concrete compliance rules are provided, but you can also define your own by [inheriting from ComplianceRule](https://github.com/simongarisch/pytrading/blob/master/notes/02%20The%20Trade%20Lifecycle.ipynb).
+Ideally there will be risk limits in place when running a backtest. Some concrete compliance rules are provided, but you can also define your own by [inheriting from ComplianceRule](https://github.com/simongarisch/pxtrade/blob/master/notes/02%20The%20Trade%20Lifecycle.ipynb).
 
 ```python
-from pytrading.compliance import Compliance, UnitLimit
+from pxtrade.compliance import Compliance, UnitLimit
 
 
 for port in [portfolio, benchmark]:
@@ -68,11 +68,11 @@ for port in [portfolio, benchmark]:
 ```
 
 ### Defining a portfolio broker
-Different portfolios / strategies are likely to vary materially in broker charges. All portfolios have a default broker that executes trades at the last price with no charge (or slippage). Brokers have separate execution and charges strategies. You can use the classes available or define custom strategies by inheriting from  [AbstractExecution](https://github.com/simongarisch/pytrading/blob/master/pytrading/broker/execution.py#L6) or [AbstractCharges](https://github.com/simongarisch/pytrading/blob/master/pytrading/broker/charges.py#L8). Note that backtesting supports multiple currencies. The portfolio could be denominated in USD, for example, but broker charges defined in AUD terms.
+Different portfolios / strategies are likely to vary materially in broker charges. All portfolios have a default broker that executes trades at the last price with no charge (or slippage). Brokers have separate execution and charges strategies. You can use the classes available or define custom strategies by inheriting from  [AbstractExecution](https://github.com/simongarisch/pxtrade/blob/master/pxtrade/broker/execution.py#L6) or [AbstractCharges](https://github.com/simongarisch/pxtrade/blob/master/pxtrade/broker/charges.py#L8). Note that backtesting supports multiple currencies. The portfolio could be denominated in USD, for example, but broker charges defined in AUD terms.
 
 
 ```python
-from pytrading.broker import (
+from pxtrade.broker import (
     Broker, 
     FillAtLastWithSlippage,
     FixedRatePlusPercentage,
@@ -86,10 +86,10 @@ portfolio.broker = Broker(
 ```
 
 ### Defining a trading strategy
-All strategy classes must inherit from pytrading.Strategy and implement a generate_trades method. Note that the trades returned can either be None, a trade instance or list or trades.
+All strategy classes must inherit from pxtrade.Strategy and implement a generate_trades method. Note that the trades returned can either be None, a trade instance or list or trades.
 
 ```python
-import pytrading as pt
+import pxtrade as pt
 
 
 class ExampleStrategy(pt.Strategy):
@@ -117,12 +117,12 @@ history = pt.History(
 )
 ```
 
-### [Loading event data](https://github.com/simongarisch/pytrading/blob/master/notes/05%20Bulk%20Event%20Loads.ipynb)
+### [Loading event data](https://github.com/simongarisch/pxtrade/blob/master/notes/05%20Bulk%20Event%20Loads.ipynb)
 Events can be loaded either from yahoo finance or from an existing data frame.
 
 ```python
 from datetime import date
-from pytrading.events.yahoo import load_yahoo_prices
+from pxtrade.events.yahoo import load_yahoo_prices
 
 
 start_date = date(2020, 6, 30)
@@ -161,7 +161,7 @@ df[columns].iplot(
     title="Portfolio Holdings of SPY",
 )
 ```
-![holdings](https://github.com/simongarisch/pytrading/blob/master/notes/portfolio_holdings_of_spy.png?raw=true)
+![holdings](https://github.com/simongarisch/pxtrade/blob/master/notes/portfolio_holdings_of_spy.png?raw=true)
 
 
 ```python
@@ -170,6 +170,6 @@ df[columns].iplot(
     title="Portfolio Value",
 )
 ```
-![holdings](https://github.com/simongarisch/pytrading/blob/master/notes/portfolio_value.png?raw=true)
+![holdings](https://github.com/simongarisch/pxtrade/blob/master/notes/portfolio_value.png?raw=true)
 
 ***

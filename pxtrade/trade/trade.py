@@ -1,6 +1,6 @@
 """ Defines a proposed trade. """
 from typing import Union
-from pytrading.assets import Asset, Portfolio
+from pxtrade.assets import Asset, Portfolio
 
 
 def _check_asset(asset: Union[Asset, str]):

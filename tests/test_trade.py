@@ -1,6 +1,6 @@
 import pytest
-from pytrading.assets import reset, Stock, Portfolio
-from pytrading.trade import Trade
+from pxtrade.assets import reset, Stock, Portfolio
+from pxtrade.trade import Trade
 
 
 class TestTrade(object):

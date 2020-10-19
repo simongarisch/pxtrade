@@ -8,8 +8,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from weakref import WeakSet
 import pandas as pd
-import pytrading
-from pytrading.assets import Asset, FxRate, Portfolio
+import pxtrade
+from pxtrade.assets import Asset, FxRate, Portfolio
 
 
 class Visitor(ABC):
@@ -68,7 +68,7 @@ class History:
                 raise TypeError("Expecting Portfolio instance.")
 
         if backtest is not None:
-            if not isinstance(backtest, pytrading.backtest.Backtest):
+            if not isinstance(backtest, pxtrade.backtest.Backtest):
                 raise TypeError("Expecting Backtest instance.")
 
         self._portfolios = portfolios

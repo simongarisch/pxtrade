@@ -1,3 +1,3 @@
-python -m pytest --cov=pytrading --cov-report=html --doctest-modules
-flake8 pytrading
+python -m pytest --cov=pxtrade --cov-report=html --doctest-modules
+flake8 pxtrade
 flake8 tests

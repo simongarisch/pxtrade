@@ -1,10 +1,10 @@
 """ A factory pattern for downloading yahoo data for different objects. """
 from abc import ABC, abstractmethod
 from datetime import datetime, date
-from pytrading.assets import Asset, FxRate
-from pytrading.util import clean_column_name, to_datetime
-from pytrading.backtest import Backtest
-from pytrading.events import (
+from pxtrade.assets import Asset, FxRate
+from pxtrade.util import clean_column_name, to_datetime
+from pxtrade.backtest import Backtest
+from pxtrade.events import (
     AssetPriceEvent,
     FxRateEvent,
     IndicatorEvent,

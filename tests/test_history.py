@@ -1,8 +1,8 @@
 from datetime import datetime
 import pytest
 import pandas as pd
-from pytrading.assets import reset, Stock, Cash, Portfolio
-from pytrading.history import History
+from pxtrade.assets import reset, Stock, Cash, Portfolio
+from pxtrade.history import History
 
 
 class TestHistory(object):

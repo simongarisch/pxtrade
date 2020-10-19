@@ -1,5 +1,5 @@
 import pytest
-from pytrading.assets import reset, Asset, Cash
+from pxtrade.assets import reset, Asset, Cash
 
 
 def test_cash_code():

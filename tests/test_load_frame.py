@@ -1,11 +1,11 @@
 from datetime import date
 import pytest
 import pandas as pd
-from pytrading.assets import reset, Stock, FxRate, Portfolio
-from pytrading.backtest import Backtest
-from pytrading.strategy import Strategy
-from pytrading.history import History
-from pytrading.events import (
+from pxtrade.assets import reset, Stock, FxRate, Portfolio
+from pxtrade.backtest import Backtest
+from pxtrade.strategy import Strategy
+from pxtrade.history import History
+from pxtrade.events import (
     AssetPriceEvent,
     FxRateEvent,
     IndicatorEvent,
