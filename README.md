@@ -1,6 +1,7 @@
 ## pxtrade
 [![Build Status](https://travis-ci.org/simongarisch/pxtrade.svg?branch=master)](https://travis-ci.org/simongarisch/pxtrade)
 [![Coverage Status](https://coveralls.io/repos/github/simongarisch/pxtrade/badge.svg)](https://coveralls.io/github/simongarisch/pxtrade?branch=master)
+[![PyPI version](https://badge.fury.io/py/pxtrade.svg)](https://badge.fury.io/py/pxtrade)
 
 A multi currency, event driven backtester written in Python.
 
