@@ -82,7 +82,7 @@ class Backtest:
         process_next_event = self._process_next_event
         process_events_for_current_datetime = (
             self._process_events_for_current_datetime
-        )
+        )  # noqa: E501
         take_history_snapshot = self._take_history_snapshot
         while True:
             process_next_event()  # primes self._datetime

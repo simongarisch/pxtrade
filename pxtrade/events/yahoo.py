@@ -78,7 +78,9 @@ class Loader(ABC):
         EventClass = events_map[self.__class__]
         for event_datetime, row in df.iterrows():
             close = float(row["adj_close"])
-            event = EventClass(instance, event_datetime, close, backtest=backtest)  # noqa: E501
+            event = EventClass(
+                instance, event_datetime, close, backtest=backtest
+            )  # noqa: E501
             if event_datetime < start_date or event_datetime > end_date:
                 continue  # pragma: no cover just in case yahoo has bad data
             backtest.load_event(event)
