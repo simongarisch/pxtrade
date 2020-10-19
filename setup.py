@@ -17,6 +17,7 @@ setup(
 
     description="A multi currency, event driven backtester written in Python.",
     long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
 
     packages=find_packages(exclude=("tests",)),
 )
