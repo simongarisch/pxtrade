@@ -89,18 +89,18 @@ portfolio.broker = Broker(
 All strategy classes must inherit from pxtrade.Strategy and implement a generate_trades method. Note that the trades returned can either be None, a trade instance or list or trades.
 
 ```python
-import pxtrade as pt
+from pxtrade import Strategy, Trade 
 
 
-class ExampleStrategy(pt.Strategy):
+class ExampleStrategy(Strategy):
     def generate_trades(self):
         trades = list()
 
         # get the portfolio trades first
         if spy.price < 330:
-            trades.append(pt.Trade(portfolio, spy, +100))
+            trades.append(Trade(portfolio, spy, +100))
 
-        trades.append(pt.Trade(benchmark, spy, +1000))
+        trades.append(Trade(benchmark, spy, +1000))
 
         return trades
 ```
@@ -109,9 +109,12 @@ class ExampleStrategy(pt.Strategy):
 A backtest takes a strategy instance as its argument. Any instances of History then record state through time as events are processed.
 
 ```python
-backtest = pt.Backtest(ExampleStrategy())
+from pxtrade import Backtest, History
 
-history = pt.History(
+
+backtest = Backtest(ExampleStrategy())
+
+history = History(
     portfolios=[portfolio, benchmark],
     backtest=backtest
 )
