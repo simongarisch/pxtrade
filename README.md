@@ -106,7 +106,7 @@ class ExampleStrategy(pt.Strategy):
 ```
 
 ### The backtest instance and trade history
-A backtest takes a strategy instance as it's argument. Any instances of History then record state through time as events are processed.
+A backtest takes a strategy instance as its argument. Any instances of History then record state through time as events are processed.
 
 ```python
 backtest = pt.Backtest(ExampleStrategy())
