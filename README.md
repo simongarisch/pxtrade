@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/simongarisch/pxtrade/badge.svg)](https://coveralls.io/github/simongarisch/pxtrade?branch=master)
 [![PyPI version](https://badge.fury.io/py/pxtrade.svg)](https://badge.fury.io/py/pxtrade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A multi currency, event driven backtester written in Python.
 
