@@ -33,7 +33,7 @@ benchmark = Portfolio("USD", code="Benchmark")
 
 print(portfolio)
 ```
-    Portfolio('USD')
+Portfolio('USD')
     
 
 
@@ -43,14 +43,14 @@ benchmark.transfer(usd, 1e6)
 
 print(portfolio)
 ```
-    Portfolio('USD'):
-    Cash('USD', 1.0, currency_code='USD'): 1,000,000
+Portfolio('USD'):
+Cash('USD', 1.0, currency_code='USD'): 1,000,000
     
 
 ```python
 portfolio.value
 ```
-    1000000.0
+1000000.0
 
 
 
