@@ -13,6 +13,7 @@ setup(
 
     author="Simon Garisch",
     author_email="gatman946@gmail.com",
+    url="https://github.com/simongarisch/pytrading",
 
     description="A multi currency, event driven backtester written in Python.",
     long_description=open("README.md").read(),
