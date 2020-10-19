@@ -8,9 +8,10 @@ from ..settings import get_default_currency_code
 
 
 class Asset(ABC):
-    """ All asset objects must have a unique code.
-        Each asset type must define it's own local_value property.
+    """All asset objects must have a unique code.
+    Each asset type must define it's own local_value property.
     """
+
     _codes = Codes()
     yahoo_ticker = None
 
@@ -71,12 +72,15 @@ class Asset(ABC):
     def __str__(self):
         class_name = self.__class__.__name__
         return class_name + "('{}', {}, currency_code='{}')".format(
-            self.code, self.price, self.currency_code,
+            self.code,
+            self.price,
+            self.currency_code,
         )
 
 
 class StaticPriceAsset(Asset):
     """ Some assets will have a static price (e.g. cash). """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -87,6 +91,7 @@ class StaticPriceAsset(Asset):
 
 class VariablePriceAsset(Asset, Observable):
     """ The price can be set and observed after init. """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

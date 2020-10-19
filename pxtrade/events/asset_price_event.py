@@ -22,7 +22,9 @@ class AssetPriceEvent(AbstractEvent):
             self.__class__.__name__
             + "("
             + self._asset.__class__.__name__
-            + "('" + self._asset.code + "')"
+            + "('"
+            + self._asset.code
+            + "')"
             + ", "
             + str(self._datetime)
             + ", "

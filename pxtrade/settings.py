@@ -4,9 +4,8 @@ from .assets.codes import check_currency_code
 
 
 config = ConfigParser()
-config.read(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.ini")
-)
+dire_path = os.path.dirname(os.path.abspath(__file__))
+config.read(os.path.join(dire_path, "settings.ini"))
 
 
 def set_default_currency_code(code: str = "USD"):

@@ -13,9 +13,10 @@ from pxtrade.assets import Asset, FxRate, Portfolio
 
 
 class Visitor(ABC):
-    """ Our history instance can visit different objects
-        and record data relating to them.
+    """Our history instance can visit different objects
+    and record data relating to them.
     """
+
     @abstractmethod
     def visit(self, instance):
         raise NotImplementedError()  # pragma: no cover
@@ -40,10 +41,12 @@ class PortfolioVisitor(Visitor):
         rows.append((portfolio_code, portfolio.value))
         for asset in Asset.get_instances():
             asset_code = asset.code
-            rows.append((
-                portfolio_code + "_" + asset_code,
-                portfolio.get_holding_units(asset_code)
-            ))
+            rows.append(
+                (
+                    portfolio_code + "_" + asset_code,
+                    portfolio.get_holding_units(asset_code),
+                )
+            )
         return rows
 
 

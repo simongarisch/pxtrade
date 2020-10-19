@@ -3,7 +3,7 @@ from .broker import Broker  # noqa: F401
 from .execution import (  # noqa: F401
     AbstractExecution,
     FillAtLast,
-    FillAtLastWithSlippage
+    FillAtLastWithSlippage,
 )
 
 from .charges import (  # noqa: F401

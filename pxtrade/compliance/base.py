@@ -16,9 +16,10 @@ class ComplianceRule(ABC):
 
 
 class Compliance(ComplianceRule):
-    """ All compliance rule components have to pass for
-        compliance as a whole to pass.
+    """All compliance rule components have to pass for
+    compliance as a whole to pass.
     """
+
     def __init__(self):
         self._rules = set()
 

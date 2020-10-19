@@ -34,9 +34,7 @@ class IndicatorEvent(AbstractEvent):
     def _process(self):
         if self._backtest is None:
             return
-        self._backtest.set_indicator(
-            self._indicator_name, self.event_value
-        )
+        self._backtest.set_indicator(self._indicator_name, self.event_value)
 
     def __str__(self):
         return (

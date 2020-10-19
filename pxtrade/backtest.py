@@ -55,8 +55,8 @@ class Backtest:
             process_next_event()
 
     def _run_strategy(self):
-        """ The strategy should return either a singular
-            trade or a list of trades to execute.
+        """The strategy should return either a singular
+        trade or a list of trades to execute.
         """
         strategy = self._strategy
         if strategy is None:
@@ -66,25 +66,23 @@ class Backtest:
         if strategy_trades is None:
             return
         if isinstance(strategy_trades, trade.Trade):  # singular
-            # print(self._datetime, strategy_trades)
-            self.load_event(events.TradeEvent(
-                self._datetime, strategy_trades
-            ))
+            trade_event = events.TradeEvent(self._datetime, strategy_trades)
+            self.load_event(trade_event)
         else:
             for strategy_trade in strategy_trades:
-                # print(self._datetime, strategy_trade)
-                self.load_event(events.TradeEvent(
-                    self._datetime, strategy_trade
-                ))
+                trade_event = events.TradeEvent(self._datetime, strategy_trade)
+                self.load_event(trade_event)
 
     def run(self):
-        """ Process all events in the queue with the same time stamp,
-            then run your strategy.
-            Continue this process until the queue is empty.
+        """Process all events in the queue with the same time stamp,
+        then run your strategy.
+        Continue this process until the queue is empty.
         """
         queue = self._events_queue
         process_next_event = self._process_next_event
-        process_events_for_current_datetime = self._process_events_for_current_datetime  # noqa: E501
+        process_events_for_current_datetime = (
+            self._process_events_for_current_datetime
+        )
         take_history_snapshot = self._take_history_snapshot
         while True:
             process_next_event()  # primes self._datetime

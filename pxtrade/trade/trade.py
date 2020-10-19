@@ -4,8 +4,8 @@ from pxtrade.assets import Asset, Portfolio
 
 
 def _check_asset(asset: Union[Asset, str]):
-    """ If an asset is passed then return this asset.
-        However, if an asset code is passed make sure this is valid.
+    """If an asset is passed then return this asset.
+    However, if an asset code is passed make sure this is valid.
     """
     if isinstance(asset, Asset):
         return asset
@@ -66,7 +66,9 @@ class Trade:
             self.__class__.__name__
             + "("
             + "Portfolio('%s')" % self._portfolio.base_currency_code
-            + ", '" + self._asset_code + "', "
+            + ", '"
+            + self._asset_code
+            + "', "
             + str(self._units)
             + ")"
         )

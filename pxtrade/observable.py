@@ -20,6 +20,7 @@ class Observable:
 
 class Observer(ABC):
     """ All observers must implement a observable_update method. """
+
     @abstractmethod
     def observable_update(self):
         raise NotImplementedError()  # pragma: no cover

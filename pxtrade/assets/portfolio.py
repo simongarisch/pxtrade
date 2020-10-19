@@ -18,6 +18,7 @@ from ..broker import Broker
 
 class Portfolio(Observer):
     """ A portfolio will observe the assets it holds. """
+
     _codes = Codes()
 
     @classmethod
@@ -111,9 +112,9 @@ class Portfolio(Observer):
         self._revalue()
 
     def _check_observable(self, asset):
-        """ Check whether we need to observe some asset.
-            If we have some non-zero holding then we should
-            observe the asset and its quoted currency.
+        """Check whether we need to observe some asset.
+        If we have some non-zero holding then we should
+        observe the asset and its quoted currency.
         """
         units = self._holdings[asset]
         fx_pair = self._base_currency_code + asset.currency_code
@@ -160,13 +161,18 @@ class Portfolio(Observer):
         holdings = self._holdings
         portfoliostr = "Portfolio('%s')" % self.base_currency_code
         assets_with_holdings = [
-            asset for asset, units in holdings.items()
-            if units != 0
+            asset for asset, units in holdings.items() if units != 0
         ]
         if len(assets_with_holdings) == 0:
             return portfoliostr
 
-        return portfoliostr + ":\n" + "\n".join([
-                str(asset) + ": " + "{0:,.0f}".format(holdings[asset])
-                for asset in assets_with_holdings
-        ])
+        return (
+            portfoliostr
+            + ":\n"
+            + "\n".join(
+                [
+                    str(asset) + ": " + "{0:,.0f}".format(holdings[asset])
+                    for asset in assets_with_holdings
+                ]
+            )
+        )

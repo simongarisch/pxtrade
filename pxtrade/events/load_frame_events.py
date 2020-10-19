@@ -13,8 +13,8 @@ def load_frame_events(
     backtest,
     event_class,
 ) -> int:
-    """ Loads backtest events from a data frame.
-        Returns the number of events loaded.
+    """Loads backtest events from a data frame.
+    Returns the number of events loaded.
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError("Expecting pd.DataFrame instance.")

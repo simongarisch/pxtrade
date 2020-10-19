@@ -20,7 +20,7 @@ def validate_pair(pair: str) -> str:
 
 
 def split_pair(pair):
-    """ Return two individual components of the pair.
+    """Return two individual components of the pair.
     >>> split_pair("AUDUSD")
     ('AUD', 'USD')
     """
@@ -31,7 +31,7 @@ def split_pair(pair):
 
 
 def is_equivalent_pair(pair):
-    """ Returns True where we expect the rate to be static.
+    """Returns True where we expect the rate to be static.
         For example, AUDAUD = 1.0, USDUSD = 1.0
     >>> is_equivalent_pair("AUDAUD")
     True
@@ -45,7 +45,7 @@ def is_equivalent_pair(pair):
 
 
 def get_inverse_pair(pair):
-    """ Returns the inverse of some currency pair.
+    """Returns the inverse of some currency pair.
     >>> get_inverse_pair("AUDUSD")
     'USDAUD'
     """
@@ -54,9 +54,10 @@ def get_inverse_pair(pair):
 
 
 class FxRate(Observable):
-    """ Keep track of fx rates to value assets in different currencies.
-        Notify all observers of a rate change.
+    """Keep track of fx rates to value assets in different currencies.
+    Notify all observers of a rate change.
     """
+
     _instances = WeakValueDictionary()
 
     @classmethod
@@ -129,8 +130,8 @@ class FxRate(Observable):
 
     @classmethod
     def get_observable_instance(cls, pair):
-        """ Return an instance representing either the
-            currency pair (if available) or its inverse.
+        """Return an instance representing either the
+        currency pair (if available) or its inverse.
         """
         pair = validate_pair(pair)
         instance = cls._instances.get(pair)

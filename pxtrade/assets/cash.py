@@ -18,7 +18,7 @@ def get_cash(currency_code):
     cash = Asset.get_asset_for_code(currency_code)
     if cash is not None:
         if not isinstance(cash, Cash):
-            raise TypeError(
+            raise TypeError(  # code already taken by cash asset
                 "Currency code '%s' is reserved for cash." % currency_code
             )
     else:

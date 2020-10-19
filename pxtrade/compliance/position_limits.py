@@ -20,11 +20,9 @@ class UnitLimit(ComplianceRule):
         return True
 
     def __str__(self):
-        return (
-            self.__class__.__name__
-            + "('%s', %s)" % (
-                self._asset.code, "{:,}".format(self._unit_limit)
-            )
+        return self.__class__.__name__ + "('%s', %s)" % (
+            self._asset.code,
+            "{:,}".format(self._unit_limit),
         )
 
 
@@ -45,7 +43,7 @@ class WeightLimit(ComplianceRule):
         return True
 
     def __str__(self):
-        return (
-            self.__class__.__name__
-            + "('%s', %0.2f)" % (self._asset.code, self._weight_limit)
+        return self.__class__.__name__ + "('%s', %0.2f)" % (
+            self._asset.code,
+            self._weight_limit,
         )

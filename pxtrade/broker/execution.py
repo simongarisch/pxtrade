@@ -35,8 +35,8 @@ class FillAtLastWithSlippage(AbstractExecution):
         consideration = asset.local_value * -units
         if consideration > 0:
             # receive less cash when selling
-            consideration *= (1 - self._slippage)
+            consideration *= 1 - self._slippage
         if consideration < 0:
             # pay more cash when buying
-            consideration *= (1 + self._slippage)
+            consideration *= 1 + self._slippage
         portfolio.trade(asset, units, consideration=consideration)

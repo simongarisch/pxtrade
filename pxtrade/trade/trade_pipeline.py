@@ -9,6 +9,7 @@ from pxtrade.trade import Trade
 
 class Handler(ABC):
     """ A chain of responsibility pattern for the trade pipeline. """
+
     _next = None
 
     def set_next(self, handler):
@@ -35,6 +36,7 @@ class ComplianceHandler(Handler):
     The portfolio is then rolled back using the memento pattern once this
     check is complete.
     """
+
     def handle(self, trade):
         if len(trade.portfolio.compliance) > 0:
             # mock execute the trade and run compliance

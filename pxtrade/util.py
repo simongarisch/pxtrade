@@ -7,7 +7,7 @@ import numpy as np
 
 
 def clean_string(s: str) -> str:
-    """ Cleans and returns an input string
+    """Cleans and returns an input string
     >>> clean_string(" xYz ")
     'XYZ'
     """
@@ -15,7 +15,7 @@ def clean_string(s: str) -> str:
 
 
 def clean_column_name(column):
-    """ Cleans and returns a dataframe column name.
+    """Cleans and returns a dataframe column name.
     >>> clean_column_name("Adj Close")
     'adj_close'
     """
@@ -23,8 +23,8 @@ def clean_column_name(column):
 
 
 def check_positive_numeric(x):
-    """ Check that some value is both numeric and >= 0
-        before returning it.
+    """Check that some value is both numeric and >= 0
+    before returning it.
     """
     if not isinstance(x, Real):
         raise TypeError("Expecting numeric value.")
@@ -34,9 +34,9 @@ def check_positive_numeric(x):
 
 
 def to_datetime(t):
-    """ Convert some object representing a datetime
-        to a Python datetime object. Often times are represented as
-        np.datetime64 or pd.Timestamp objects.
+    """Convert some object representing a datetime
+    to a Python datetime object. Often times are represented as
+    np.datetime64 or pd.Timestamp objects.
     """
     if isinstance(t, pd.Timestamp):
         return t.to_pydatetime()

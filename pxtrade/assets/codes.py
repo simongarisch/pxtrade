@@ -4,7 +4,7 @@ from ..util import clean_string
 
 
 def check_code(code: str) -> str:
-    """ Validates a proposed asset code.
+    """Validates a proposed asset code.
     >>> check_code(" aapl ")
     'AAPL'
     """
@@ -14,7 +14,7 @@ def check_code(code: str) -> str:
 
 
 def check_currency_code(code: str) -> str:
-    """ Validates a currency code such as 'AUD' or 'USD'.
+    """Validates a currency code such as 'AUD' or 'USD'.
     >>> check_currency_code(" GBP ")
     'GBP'
     """
