@@ -5,6 +5,7 @@
 [![PyPI version](https://badge.fury.io/py/pxtrade.svg)](https://badge.fury.io/py/pxtrade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Maintainability](https://api.codeclimate.com/v1/badges/22d56bf02ecbd8ccea22/maintainability)](https://codeclimate.com/github/simongarisch/pxtrade/maintainability)
 
 A multi currency, event driven backtester written in Python.
 
