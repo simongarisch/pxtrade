@@ -6,7 +6,6 @@ from pxtrade.settings import get_default_currency_code
 
 
 class TestPortfolio(object):
-
     def setup_method(self, *args):
         reset()
         self.portfolio = Portfolio("AUD")
@@ -135,7 +134,7 @@ class TestPortfolio(object):
         self.audusd.rate = 0.7
 
         expected_value = (
-            + 2.40 * 100  # zzb au stock
+            +2.40 * 100  # zzb au stock
             + 750 * 1  # aud cash
             + 130 * 1 / 0.7  # zzb us stock
             - 120 * 1 / 0.7  # usd cash

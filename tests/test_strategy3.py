@@ -34,9 +34,7 @@ def test_audusd_strategy():
     amount = int(1e5)
     portfolio.transfer(usd, amount)
 
-    portfolio.compliance = Compliance().add_rule(
-        UnitLimit(aud, amount)
-    )
+    portfolio.compliance = Compliance().add_rule(UnitLimit(aud, amount))
 
     class AUDStrategy(Strategy):
         def generate_trades(self):
@@ -60,7 +58,8 @@ def test_audusd_strategy():
     start_date = date(2020, 1, 1)
     end_date = date(2020, 9, 30)
     load_yahoo_prices(
-        audusd, backtest,
+        audusd,
+        backtest,
         start_date=start_date,
         end_date=end_date,
     )

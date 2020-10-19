@@ -41,9 +41,7 @@ def test_buy_spy_with_indicator():
 
     # impose a compliance rule so we are unable to
     # hold more than 100 shares.
-    portfolio.compliance = Compliance().add_rule(
-        UnitLimit(spy, 100)
-    )
+    portfolio.compliance = Compliance().add_rule(UnitLimit(spy, 100))
 
     # define a strategy to buy 100 shares of SPY
     # if we are short USD then also fund this shortfall with AUD
@@ -63,7 +61,7 @@ def test_buy_spy_with_indicator():
             trades = list()
             usd_holding = portfolio.get_holding_units("USD")
             if usd_holding < 0:
-                trades.append(Trade(portfolio, usd, int(-usd_holding)+1))
+                trades.append(Trade(portfolio, usd, int(-usd_holding) + 1))
 
             if backtest.get_indicator("^VIX") >= 26:
                 # don't buy any spy, just fund usd (if required)

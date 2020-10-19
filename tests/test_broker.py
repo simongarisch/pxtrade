@@ -77,7 +77,7 @@ class TestBroker(object):
         portfolio = self.portfolio
         charges_strategy = FixedRatePlusPercentage(
             20, 0.01, currency_code="AUD"
-        )
+        )  # noqa: E501
         broker = Broker(charges_strategy=charges_strategy)
         assert portfolio.value == 1000
 
@@ -100,7 +100,7 @@ class TestBroker(object):
 
         charges_strategy = FixedRatePlusPercentage(
             20, 0.01, currency_code="USD"
-        )
+        )  # noqa: E501
         broker = Broker(charges_strategy=charges_strategy)
         assert portfolio.value == 1000
         get_holding_units = portfolio.get_holding_units

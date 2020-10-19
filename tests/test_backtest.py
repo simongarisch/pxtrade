@@ -11,7 +11,9 @@ from pxtrade.compliance import Compliance, UnitLimit
 def test_backtest_indicator():
     backtest = Backtest()
     event = IndicatorEvent(
-        "VIX", datetime(2020, 9, 1), 25,
+        "VIX",
+        datetime(2020, 9, 1),
+        25,
         backtest=backtest,
     )
     backtest.load_event(event)

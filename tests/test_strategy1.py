@@ -26,9 +26,7 @@ def test_buy_and_hold():
 
     # impose a compliance rule so we are unable to
     # hold more than 100 shares.
-    portfolio.compliance = Compliance().add_rule(
-        UnitLimit(spy, 100)
-    )
+    portfolio.compliance = Compliance().add_rule(UnitLimit(spy, 100))
 
     # define a strategy to buy 100 shares at the outset.
     class BuyAndHold(Strategy):
@@ -42,7 +40,8 @@ def test_buy_and_hold():
     start_date = date(2020, 9, 1)
     end_date = date(2020, 10, 1)
     load_yahoo_prices(
-        spy, backtest,
+        spy,
+        backtest,
         start_date=start_date,
         end_date=end_date,
     )

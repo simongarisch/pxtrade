@@ -32,7 +32,9 @@ class TestTrade(object):
 
     def test_proposed_trade_init_with_asset(self):
         trade = Trade(
-            self.portfolio, self.stock, 300,
+            self.portfolio,
+            self.stock,
+            300,
         )
         assert trade.portfolio is self.portfolio
         assert trade.asset is self.stock
@@ -56,15 +58,11 @@ class TestTrade(object):
 
     def test_proposed_trade_no_asset(self):
         with pytest.raises(ValueError):
-            Trade(
-                self.portfolio, "NO_ASSET_WITH_THIS_CODE", 200
-            )
+            Trade(self.portfolio, "NO_ASSET_WITH_THIS_CODE", 200)
 
     def test_units_must_be_int(self):
         with pytest.raises(TypeError):
-            Trade(
-                self.portfolio, "ZZB AU", "100"
-            )
+            Trade(self.portfolio, "ZZB AU", "100")
 
     def test_trade_str(self):
         tradestr = str(self.trade)

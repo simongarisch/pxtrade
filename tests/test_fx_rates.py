@@ -44,9 +44,9 @@ def test_fx_rate_get():
 
 
 def test_already_created():
-    """ Once a rate is created we must not create it again.
-        We don't want multiple objects with different
-        prices representing the same asset.
+    """Once a rate is created we must not create it again.
+    We don't want multiple objects with different
+    prices representing the same asset.
     """
     audusd = FxRate("AUDUSD", 0.65)
     assert audusd.rate == 0.65
@@ -110,8 +110,8 @@ def test_get_observable_instance():
 
 
 def test_inverse_pair_creation():
-    """ Once we have created AUDUSD, for example,
-        we cannot create USDAUD.
+    """Once we have created AUDUSD, for example,
+    we cannot create USDAUD.
     """
     audusd = FxRate("AUDUSD", 0.5)
     assert audusd.rate == 0.5

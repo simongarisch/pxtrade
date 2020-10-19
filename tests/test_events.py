@@ -14,7 +14,8 @@ def test_asset_price_event():
     stock = Stock("XYZ AU", 2.50, currency_code="AUD")
     dt = datetime(2020, 9, 1, 12, 30)
     event = AssetPriceEvent(stock, dt, 2.60)
-    assert str(event) == "AssetPriceEvent(Stock('XYZ AU'), 2020-09-01 12:30:00, 2.6)"  # noqa: E501
+    str_expected = "AssetPriceEvent(Stock('XYZ AU'), 2020-09-01 12:30:00, 2.6)"
+    assert str(event) == str_expected
     assert event.asset is stock
     assert event.datetime is dt
     assert event.event_value == 2.60
@@ -90,7 +91,8 @@ def test_proposed_trade_event():
     dt = datetime(2020, 9, 1, 12, 30)
     trade = Trade(portfolio, goog, +100)
     event = TradeEvent(dt, trade)
-    assert str(event) == "TradeEvent(2020-09-01 12:30:00, Trade(Portfolio('USD'), 'GOOG US', 100))"  # noqa: E501
+    str_expected = "TradeEvent(2020-09-01 12:30:00, Trade(Portfolio('USD'), 'GOOG US', 100))"  # noqa: E501
+    assert str(event) == str_expected
     assert event.datetime is dt
     assert event.event_value is trade
 
@@ -119,7 +121,10 @@ def test_proposed_trade_event():
 def test_indicator_event():
     dt = datetime(2020, 9, 1, 12, 30)
     event = IndicatorEvent("some_name", dt, "some_value")
-    assert str(event) == "IndicatorEvent('some_name', 2020-09-01 12:30:00, some_value)"  # noqa: E501
+    str_expected = (
+        "IndicatorEvent('some_name', 2020-09-01 12:30:00, some_value)"  # noqa: E501
+    )
+    assert str(event) == str_expected
     assert event.datetime is dt
     assert event.indicator_name == "some_name"
     assert event.event_value == "some_value"
@@ -139,10 +144,7 @@ def test_indicator_event_validation():
             raise TypeError("Expecting string.")
 
     event = IndicatorEvent(
-        "IndicatorName",
-        dt,
-        "IndicatorValue",
-        validation_func=validation_func
+        "IndicatorName", dt, "IndicatorValue", validation_func=validation_func
     )
     assert event.datetime is dt
     assert event.event_value == "IndicatorValue"
@@ -152,13 +154,11 @@ def test_indicator_event_validation():
     with pytest.raises(TypeError):
         IndicatorEvent(
             "IndicatorName", dt, 123, validation_func=validation_func
-        )
+        )  # noqa: E501
 
     # validation func must be callable
     with pytest.raises(TypeError):
-        IndicatorEvent(
-            "IndicatorName", dt, "xxx", validation_func=123
-        )
+        IndicatorEvent("IndicatorName", dt, "xxx", validation_func=123)
 
     # indicator name must be a string
     with pytest.raises(TypeError):

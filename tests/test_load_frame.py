@@ -46,7 +46,8 @@ class TestLoadFrame(object):
     def test_load_frame_price_events(self):
         events_loaded = load_frame_events(
             self.stock,
-            self.df.copy(), "column_name",
+            self.df.copy(),
+            "column_name",
             backtest=self.backtest,
             event_class=AssetPriceEvent,
         )
@@ -63,7 +64,8 @@ class TestLoadFrame(object):
     def test_load_frame_fx_events(self):
         load_frame_events(
             self.fx_rate,
-            self.df.copy(), "column_name",
+            self.df.copy(),
+            "column_name",
             backtest=self.backtest,
             event_class=FxRateEvent,
         )
@@ -79,7 +81,8 @@ class TestLoadFrame(object):
     def test_load_frame_indicator_events(self):
         load_frame_events(
             "IndicatorCode",
-            self.df.copy(), "column_name",
+            self.df.copy(),
+            "column_name",
             backtest=self.backtest,
             event_class=IndicatorEvent,
         )
@@ -96,7 +99,8 @@ class TestLoadFrame(object):
         # no events are loaded from an empty data frame
         events_loaded = load_frame_events(
             "IndicatorCode",
-            pd.DataFrame(), "column_name",
+            pd.DataFrame(),
+            "column_name",
             backtest=self.backtest,
             event_class=IndicatorEvent,
         )
@@ -106,7 +110,8 @@ class TestLoadFrame(object):
             # needs a pd.DataFrame instance
             events_loaded = load_frame_events(
                 "XXX",
-                "NoDataFrame", "column_name",
+                "NoDataFrame",
+                "column_name",
                 backtest=self.backtest,
                 event_class=IndicatorEvent,
             )
@@ -115,7 +120,8 @@ class TestLoadFrame(object):
             # with a column as string
             events_loaded = load_frame_events(
                 "XXX",
-                pd.DataFrame(), None,
+                pd.DataFrame(),
+                None,
                 backtest=self.backtest,
                 event_class=IndicatorEvent,
             )
@@ -124,7 +130,8 @@ class TestLoadFrame(object):
             # needs a backtest instance
             events_loaded = load_frame_events(
                 "XXX",
-                pd.DataFrame(), "column_name",
+                pd.DataFrame(),
+                "column_name",
                 backtest="NoBacktest",
                 event_class=IndicatorEvent,
             )
@@ -133,7 +140,8 @@ class TestLoadFrame(object):
             # expecting a class
             events_loaded = load_frame_events(
                 "XXX",
-                pd.DataFrame(), "column_name",
+                pd.DataFrame(),
+                "column_name",
                 backtest=self.backtest,
                 event_class="NotAClass",
             )
@@ -145,7 +153,8 @@ class TestLoadFrame(object):
 
             events_loaded = load_frame_events(
                 "XXX",
-                pd.DataFrame(), "column_name",
+                pd.DataFrame(),
+                "column_name",
                 backtest=self.backtest,
                 event_class=MyClass,
             )
@@ -156,7 +165,8 @@ class TestLoadFrame(object):
         with pytest.raises(TypeError):
             load_frame_events(
                 "IndicatorCode",
-                df, "column_name",
+                df,
+                "column_name",
                 backtest=self.backtest,
                 event_class=IndicatorEvent,
             )
