@@ -1,7 +1,9 @@
 ## pxtrade
+[![Python](https://img.shields.io/badge/python-v3-brightgreen.svg)](https://www.python.org/)
 [![Build Status](https://travis-ci.org/simongarisch/pxtrade.svg?branch=master)](https://travis-ci.org/simongarisch/pxtrade)
 [![Coverage Status](https://coveralls.io/repos/github/simongarisch/pxtrade/badge.svg)](https://coveralls.io/github/simongarisch/pxtrade?branch=master)
 [![PyPI version](https://badge.fury.io/py/pxtrade.svg)](https://badge.fury.io/py/pxtrade)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 A multi currency, event driven backtester written in Python.
 
