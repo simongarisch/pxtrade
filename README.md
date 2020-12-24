@@ -91,7 +91,7 @@ portfolio.broker = Broker(
 ```
 
 ### Defining a trading strategy
-All strategy classes must inherit from pxtrade.Strategy and implement a generate_trades method. Note that the trades returned can either be None, a trade instance or list or trades.
+All strategy classes must inherit from pxtrade.Strategy and implement a generate_trades method. Note that the trades returned can either be None, a trade instance or list of trades.
 
 ```python
 from pxtrade import Strategy, Trade 
