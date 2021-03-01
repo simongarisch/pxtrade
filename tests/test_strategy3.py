@@ -6,12 +6,12 @@ Buy AUD if AUDUSD <= 0.6
 Sell AUD if AUDUSD >= 0.7
 
 PNL Using Adj. Close from yahoo finance:
-On 18 Mar 2020 AUDUSD = 0.599219
-On 07 Jun 2020 AUDUSD = 0.700241
+On 18 Mar 2020 AUDUSD = 0.59922
+On 07 Jun 2020 AUDUSD = 0.70024
 If we bought and sold 100K AUD at these rates then:
-* We'd pay USD $59,912 to enter the position
+* We'd pay USD $59,922 to enter the position
 * Receive USD $70,024 on exit.
-* For a trade pnl of 10,102 (=70,024-59,912)
+* For a trade pnl of 10,102 (=70,024-59,922)
 
 Total portfolio value will be starting value + pnl.
 """
@@ -70,7 +70,10 @@ def test_audusd_strategy():
     # df = web.DataReader("AUDUSD=X", "yahoo", start_date, end_date)
     # df[df["Adj Close"] <= 0.6]
     # df[df["Adj Close"] >= 0.7]
-    assert int(portfolio.value) == int(amount + 10102)
+    portfolio_value = int(portfolio.value)
+
+    # there may be some rounding differences
+    assert portfolio_value in [int(amount + 10101), int(amount + 10102)]
 
     df = history.get()
     assert len(df.index) == 0  # no history is recorded
