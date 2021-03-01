@@ -1,10 +1,10 @@
 """
 Here we test a basic buy and hold strategy for 100 shares of SPY.
 The strategy is to:
--  Buy 100 shares of SPY @351.19 on Sep 1st
--  Hold until Oct 1st when the price is @337.04
+-  Buy 100 shares of SPY @349.70 on Sep 1st
+-  Hold until Oct 1st when the price is @335.61
 
-PNL = (337.04 - 351.19) * 100 = -USD 1,415
+PNL = (335.61 - 349.70) * 100 = -USD 1,409
 """
 from datetime import date
 import pandas as pd
@@ -48,7 +48,7 @@ def test_buy_and_hold():
 
     # run the backtest and check pnl
     backtest.run()
-    assert int(portfolio.value) == -1415
+    assert int(portfolio.value) == -1409
     df = history.get()
 
     start_date = pd.Timestamp(start_date)
@@ -58,12 +58,12 @@ def test_buy_and_hold():
     assert df.at[end_date, "Portfolio_SPY"] == 100
 
     # a short position is held in USD (for the cost of stock purchase)
-    assert int(df.at[start_date, "Portfolio_USD"]) == -35119
+    assert int(df.at[start_date, "Portfolio_USD"]) == -34970
 
     # check on the start and ending prices for spy
-    assert round(df.at[start_date, "SPY"], 2) == 351.19
-    assert round(df.at[end_date, "SPY"], 2) == 337.04
+    assert round(df.at[start_date, "SPY"], 2) == 349.70
+    assert round(df.at[end_date, "SPY"], 2) == 335.61
 
     # and the portfolio value
     assert int(df.at[start_date, "Portfolio"]) == 0
-    assert int(df.at[end_date, "Portfolio"]) == -1415
+    assert int(df.at[end_date, "Portfolio"]) == -1409
